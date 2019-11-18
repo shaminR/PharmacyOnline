@@ -1,9 +1,20 @@
 import * as express from 'express';
+import Database from './database';
 
 const router = express.Router();
 
 router.get('/api/hello', (req, res, next) => {
-    res.json('World');
+    res.json('Rahman');
 });
+
+router.get('/api/drugs', async(req, res) => {
+    try {
+        let drugs = await Database.Drugs.listAllDrugs();
+        res.json(drugs);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
 
 export default router;
