@@ -1,7 +1,4 @@
-# Barebones React/TypeScript/Express/Sass Boilerplate
-This project is a starting point for a TypeScript based React app that also has a local API server using express.
-
-There are 2 different Webpack configurations. One for the server and one for the client.
+# PharmacyOnline
 
 ## Server
 The server build process compiles the TypeScript files found in `/src/server` into a single bundled JavaScript file located in the `/dist` directory.
