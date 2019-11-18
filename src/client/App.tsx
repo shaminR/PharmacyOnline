@@ -1,48 +1,29 @@
 import * as React from 'react';
 // import {Navigation, Layout, Header, Content, Drawer} from 'react-mdl';
-import {Navbar, Button, Nav, FormControl, Form} from 'react-bootstrap';
+import {Card, Navbar, Button, Nav} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import Main from './components/main';
 
-class App extends React.Component<IAppProps, IAppState> {
-
-	constructor(props: IAppProps) {
-		super(props);
-		this.state = {
-			drugs: []
-		};
-	}
-
-	async componentDidMount() {
-		try {
-			let r = await fetch('/api/drugs');
-			let drugs = await r.json();
-			this.setState({ drugs });
-		} catch (error) {
-			console.log(error);
-		}
-	}
+class App extends React.Component{
 
 	render() {
-		return (
-			<main className="container my-5">
-				<h1 className="text-primary text-center">Drugs in stock</h1>
-				<ul className="list-group">
-					{this.state.drugs.map(drug =>{
-						return <li className="list-group-item" key = {drug.drugName}>
-							{drug.drugName},
-							price: $
-							{drug.price}
-						</li>
-					})}
-				</ul>
-			</main>
-		);
-	}
-}
-
-export interface IAppProps {}
-
-export interface IAppState {
-	drugs: Array<{drugName: string, price: string}>;
+        return(
+            <div>
+            {/* <Navbar bg="primary" variant="dark" fixed = "top">
+                <Navbar.Brand href="#home">PharmacyOnline®</Navbar.Brand>
+                <Nav className="mr-auto">
+                <Nav.Link href="/drugs">Drugs</Nav.Link>
+                <Link to="/about">About us</Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                </Nav>
+                <Button variant="dark">Sign Up</Button>
+            </Navbar>
+			<Card> */}
+				<Main/>
+			{/* </Card> */}
+            </div>
+        );
+    }
 }
 
 export default App;

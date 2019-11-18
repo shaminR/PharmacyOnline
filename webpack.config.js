@@ -28,6 +28,7 @@ const serverConfig = {
         __dirname: false
     },
     externals: [nodeExternals()]
+    // historyApiFallback: true
 };
 
 const clientConfig = {

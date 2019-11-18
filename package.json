@@ -17,6 +17,7 @@
     "@types/mysql": "^2.15.8",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
+    "@types/react-router-dom": "^5.1.2",
     "bootstrap": "^4.3.1",
     "css-loader": "^1.0.1",
     "express": "^4.17.1",
