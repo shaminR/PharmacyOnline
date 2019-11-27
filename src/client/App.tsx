@@ -18,7 +18,8 @@ class App extends React.Component{
                 </Nav>
                 <Button variant="dark">Sign Up</Button>
             </Navbar>
-			<Card> */}
+			<Card> */
+            <h1> fuck u fudu </h1>}
 				<Main/>
 			{/* </Card> */}
             </div>
