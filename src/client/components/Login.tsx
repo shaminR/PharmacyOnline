@@ -32,8 +32,8 @@ class Login extends React.Component{
     action = () => {
         // alert("button pressed");
         console.log(this.state);
+        this.verify("yuh");
     }
-
     handleChange = (e: any) => {
         // console.log(e);
         this.setState({
@@ -43,6 +43,33 @@ class Login extends React.Component{
     handleSubmit = (e: any) => {
         e.preventDefault();
         console.log(this.state);
+    }
+    
+    async verify(e: string) {
+        // try {
+        //     let r = await fetch('/api/users', {
+        //         method: 'PUT',
+        //         headers: {'Content-Type':'application/json'},
+        //         body: JSON.stringify({ name: 'yuh'})
+        //     });
+        //     let result = await r;
+        //     console.log(result);
+        // } catch (error) {
+        //     console.log(error);
+        // }
+        try {
+            let r = await fetch('/api/users',{
+                method: 'PUT',
+                body: JSON.stringify({username: 'rahman', password: '8002'}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            let result = await r;
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     render(){
