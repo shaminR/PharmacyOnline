@@ -13,4 +13,3 @@ Connection.connect(err => {
 export default {
     Drugs
 }
-

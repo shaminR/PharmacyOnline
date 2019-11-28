@@ -17,4 +17,6 @@ router.get('/api/drugs', async(req, res) => {
     }
 })
 
+// router.use('/static', express.static(path.join(__dirname, 'public')))
+
 export default router;
