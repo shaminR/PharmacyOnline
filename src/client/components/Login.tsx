@@ -58,12 +58,15 @@ class Login extends React.Component{
         //     console.log(error);
         // }
         try {
-            let r = await fetch('/api/users',{
+            let r = await fetch('/api/users',{          //JSON.stringify({username: 'rahman', password: '8002'})
                 method: 'PUT',
-                body: JSON.stringify({username: 'rahman', password: '8002'}),
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ 
+                    'username' : 'rahman',
+                    'password' : '8002'
+                })
             });
             let result = await r;
             console.log(result);
