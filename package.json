@@ -39,6 +39,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "file-loader": "^5.0.2",
+    "image-webpack-loader": "^6.0.0",
     "nodemon": "^1.19.4",
     "npm-run-all": "^4.1.3"
   }

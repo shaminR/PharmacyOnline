@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Card, Navbar, Button, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
+// import img from './favicon2.png';
 
 const MyLink = styled(Link)`     
     text-decoration: none;
@@ -20,7 +21,9 @@ class CustomNavbar extends React.Component{
         return(
             <>
              <Navbar bg="primary" variant="dark" fixed = "top">
-                <Navbar.Brand href="/">PharmacyOnline®</Navbar.Brand>
+                <Navbar.Brand href="/">
+                   PharmacyOnline®
+                </Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link>
                         <MyLink to = "./drugs"  >Drugs</MyLink>
@@ -29,7 +32,7 @@ class CustomNavbar extends React.Component{
                         <MyLink to="./about">About us</MyLink>
                     </Nav.Link>
                     <Nav.Link>
-                        <MyLink to="./nope">Unused</MyLink>
+                        <MyLink to="./login">Sign in</MyLink>
                     </Nav.Link>
                 </Nav>
                 <Button variant="dark">Sign Up</Button>
