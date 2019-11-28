@@ -3,13 +3,16 @@ import { render } from 'react-dom';
 import App from './App';
 import './scss/app';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from "reactstrap";
 import {BrowserRouter} from 'react-router-dom';
 
 // render(<App />, document.getElementById("root"));
 
 render(
     <BrowserRouter>
-        <App />
+        <Container>
+            <App />
+        </Container>
     </BrowserRouter>,
     document.getElementById("root")
 );
