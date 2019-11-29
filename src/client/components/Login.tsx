@@ -28,11 +28,44 @@ class Login extends React.Component{
         password: '',
         type: ''
     }
+    getAllRecords = () => {
+            console.log(this.state.type);
+            this.find();
+    }
+
+    async getAllRecord(){
+        try {
+			let r = await fetch('/api/healthrecords');
+			let healthrecords = await r.json();
+            console.log(healthrecords);
+		} catch (error) {
+			console.log(error);
+		}
+    }
+
+    async find() {
+        try {
+            let r = await fetch('/api/healthrecords',{          //JSON.stringify({username: 'rahman', password: '8002'})
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state)
+            });
+            let result = await r.json();
+            console.log(result);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     dropListener = (e: any) => {
         this.setState({
             type: [e.target.value]
         })
     }
+
     action = () => {
         if(this.state.username === '' || this.state.password === ''){
             alert("Please enter valid credentials");
@@ -113,6 +146,8 @@ class Login extends React.Component{
 
                     <ButtonDiv>
                         <Button variant="primary" onClick = {this.action} >Sign in</Button>
+                        <Button variant="primary" onClick = {this.action} >Records</Button>
+                        
                     </ButtonDiv>
 
                     </Form>
