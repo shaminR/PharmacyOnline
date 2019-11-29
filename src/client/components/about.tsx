@@ -9,6 +9,11 @@ const ImgConst = styled.img`
     margin-bottom: 1rem;
     margin-top: 2px;
 `
+const SubTitle = styled.h2` 
+    //font-family: 'Open Sans';
+    font-size: 20px;
+    color: #0091ea;
+`
 class About extends React.Component{
     state = {
     
@@ -20,7 +25,8 @@ class About extends React.Component{
                <ImgConst src="https://images.pexels.com/photos/208512/pexels-photo-208512.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=350&w=1000" ></ImgConst>
                
             <h1>PharmaCare</h1>
-            <h2> shamin betcg hehe</h2>
+            <SubTitle>Delivering your prescriptions when you need them, where you need them</SubTitle>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto dignissimos eveniet saepe facilis molestiae, repellendus esse optio sequi accusantium ad soluta quod nostrum cum neque? Ipsam exercitationem numquam eos blanditiis.</p> 
             </div>
         )
     }

@@ -3,7 +3,7 @@ import {Form, Button, DropdownButton, Dropdown} from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import ActiveLogin from '../ActiveLogin';
-import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const ButtonDiv:any = styled.div`     
     display:flex;
@@ -91,7 +91,7 @@ class Login extends React.Component{
 
             if(ActiveLogin.state.type[0] == 'Client'){
                 console.log("in yuh");
-                // window.location = './userpage';
+                this.props.history.push('./userpage');
                 console.log("in bruh");
             }
 
@@ -99,9 +99,7 @@ class Login extends React.Component{
             console.log(error);
         }
     }
-    onYuh = () => {
-        return <Redirect to="./userpage" />
-    }
+  
     
     render(){
         return(
@@ -142,4 +140,4 @@ class Login extends React.Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);
