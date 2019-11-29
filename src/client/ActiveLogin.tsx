@@ -1,6 +1,10 @@
 class ActiveLogin{
 
-    
+    static state = {
+        username: '',
+        password: '',
+        type: ''
+    }
 
 }
 

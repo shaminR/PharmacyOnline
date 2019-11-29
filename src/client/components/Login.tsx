@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {Form, Button, DropdownButton, Dropdown} from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import ActiveLogin from '../ActiveLogin';
+import { useHistory } from "react-router-dom";
 
 const ButtonDiv = styled.div`     
     display:flex;
@@ -58,6 +61,7 @@ class Login extends React.Component{
     }
     async verify() {
         try {
+
             let r = await fetch('/api/users',{          //JSON.stringify({username: 'rahman', password: '8002'})
                 method: 'PUT',
                 headers: {
@@ -73,17 +77,30 @@ class Login extends React.Component{
                 return;
             }
 
+            ActiveLogin.state = this.state;             // storing who's actively logged in
+            
             console.log(result.length);
             let usernameResult = result[0].username;
 
             alert(usernameResult);
             console.log(" yuhh ");
 
+            // console.log(ActiveLogin.state);
+
+            if(ActiveLogin.state.type[0] == 'Client'){
+                console.log("in yuh");
+                // window.location = './userpage';
+                console.log("in bruh");
+            }
+
         } catch (error) {
             console.log(error);
         }
     }
-
+    onYuh = () => {
+        return <Redirect to="./userpage" />
+    }
+    
     render(){
         return(
             <div style = {{paddingTop: '10px'}}>
