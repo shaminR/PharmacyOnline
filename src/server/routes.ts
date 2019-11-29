@@ -26,14 +26,18 @@ router.get('/api/drugs', async(req, res) => {
 });
 router.put('/api/users', async(req, res) => {
     try {
-        console.log(" in users server");
+        let usernames = req.body.username;
+        let passwords = req.body.password;
+        let type = '';
 
-        let username = req.body.username;
-        let password = req.body.password;
+        if(req.body.type == 'Pharmacist'){
+            type = 'pharma';
+        } else{
+            type = 'client';
+        }
 
-        console.log(username);
-
-        let user = await Database.Users.validate({username:'rahman', password: '8002'});
+        let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
+        console.log(JSON.stringify(user));
         res.json(user);
     } catch (error) {
         console.log(error);

@@ -19,23 +19,35 @@ const FormDiv = styled.div`
     padding-top: 40px;
 `
 const DropDownDiv = styled.div`     
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 `
-
 class Login extends React.Component{
 
     state = {
-        username: '33',
-        password: 'tuhhhh',
+        username: '',
+        password: '',
+        type: ''
     }
-
+    dropListener = (e: any) => {
+        this.setState({
+            type: [e.target.value]
+        })
+    }
     action = () => {
-        // alert("button pressed");
-        console.log(this.state);
-        this.verify("yuh");
+        if(this.state.username === '' || this.state.password === ''){
+            alert("Please enter valid credentials");
+            return;
+        } 
+        if(this.state.type === '' || this.state.type == "Select"){
+            alert("please select a user type");
+            return;
+        }
+        else{
+            console.log(this.state.type);
+            this.verify();
+        }
     }
     handleChange = (e: any) => {
-        // console.log(e);
         this.setState({
             [e.target.id]: [e.target.value]
         })
@@ -44,32 +56,29 @@ class Login extends React.Component{
         e.preventDefault();
         console.log(this.state);
     }
-    
-    async verify(e: string) {
-        // try {
-        //     let r = await fetch('/api/users', {
-        //         method: 'PUT',
-        //         headers: {'Content-Type':'application/json'},
-        //         body: JSON.stringify({ name: 'yuh'})
-        //     });
-        //     let result = await r;
-        //     console.log(result);
-        // } catch (error) {
-        //     console.log(error);
-        // }
+    async verify() {
         try {
             let r = await fetch('/api/users',{          //JSON.stringify({username: 'rahman', password: '8002'})
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    'username' : 'rahman',
-                    'password' : '8002'
-                })
+                body: JSON.stringify(this.state)
             });
-            let result = await r;
-            console.log(result);
+            let result = await r.json();
+            let length = result.length;
+
+            if(length == 0){
+                alert("no user found");
+                return;
+            }
+
+            console.log(result.length);
+            let usernameResult = result[0].username;
+
+            alert(usernameResult);
+            console.log(" yuhh ");
+
         } catch (error) {
             console.log(error);
         }
@@ -83,12 +92,14 @@ class Login extends React.Component{
                     <p style = {{color: '#23272b', fontWeight: 'bold', fontSize: '20'}}>
                         Enter details
                     </p>
-                    <DropDownDiv>
-                        <DropdownButton id="dropdown-basic-button" title="User Type">
-                            <Dropdown.Item href="#/action-1">Pharmacist</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Client</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Driver</Dropdown.Item>
-                        </DropdownButton>
+                    <DropDownDiv >
+                        <Form.Group >
+                            <Form.Control as="select" onChange = {this.dropListener}>
+                                <option>Select</option>
+                                <option>Pharmacist</option>
+                                <option>Client</option>
+                            </Form.Control>
+                        </Form.Group>
                     </DropDownDiv>
                     
                     <Form.Group controlId="formGroupEmail">
