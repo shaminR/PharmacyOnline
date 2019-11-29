@@ -4,9 +4,10 @@ export const validate = async (req: any) => {
 
     const username = req.username;
     const password = req.password;
+    const type = req.userType;
 
-    const query = 'SELECT * from users WHERE username = ? AND password = ?';
-    const args = [username, password];
+    const query = 'SELECT * from users WHERE username = ? AND password = ? AND type = ?';
+    const args = [username, password, type];
 
     return new Promise((resolve, reject) => {
         Connection.query(query, args, (err, result) => {
