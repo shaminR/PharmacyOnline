@@ -40,19 +40,25 @@ router.put('/api/users', async(req, res) => {
         res.sendStatus(500);
     }
 });
-// router.get('/api/users', async(req, res) => {
-//     try {
-//         // let drugs = await Database.Drugs.listAllDrugs();
-//         console.log(" << in server >> ")
-//         let foo = req.body + " helooo ";
-//         res.json(foo);
-//     } catch (error) {
-//         console.log(error);
-//         res.sendStatus(500);
-//     }
-// });
 
+router.put('/api/signup', async(req,res)=>{
+    console.log("in signup");
+    try{
+        const fname = req.body.fname;
+        const password = req.body.password;
+        const username = req.body.username;
+        const AHN = req.body.AHN;
+        const minit = req.body.minit;
+        const lname = req.body.lname;
+        const ICName = req.body.ICName; 
+        const birthdate= (req.body.month) +"/"+(req.body.day)+"/"+(req.body.year);
+         
+        let user = await Database.addUser.addUser({passwords: password, usernames: username})
+        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName})
+    }catch(error){
+        console.log(error);
+    }
+})
 
-// router.use('/static', express.static(path.join(__dirname, 'public')))
 
 export default router;
