@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
       "outDir": "./dist/",
-      "noImplicitAny": true,
+      "noImplicitAny": false,
       "module": "commonjs",
       "target": "es5",
       "allowSyntheticDefaultImports": true,
       "strictFunctionTypes": false,
+      "suppressExcessPropertyErrors": true,
       "lib": [
           "es2017"
       ],

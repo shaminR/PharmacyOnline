@@ -84,10 +84,8 @@ class Login extends React.Component{
             console.log(result.length);
             let usernameResult = result[0].username;
 
-            alert(usernameResult);
+            console.log(usernameResult);
             console.log(" yuhh ");
-
-            // console.log(ActiveLogin.state);
 
             if(ActiveLogin.state.type[0] == 'Client'){
                 console.log("in yuh");

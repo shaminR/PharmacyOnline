@@ -10,11 +10,11 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 
-router.get('/api/hello', (req, res, next) => {
+router.get('/api/hello', (req: any, res: any, next: any) => {
     res.json('Rahman');
 });
 
-router.get('/api/drugs', async(req, res) => {
+router.get('/api/drugs', async(req: any, res: any) => {
     try {
      //   console.log(" made it here");
         let drugs = await Database.Drugs.listAllDrugs();
@@ -24,17 +24,11 @@ router.get('/api/drugs', async(req, res) => {
         res.sendStatus(500);
     }
 });
-router.put('/api/healthrecords', async(req, res) => {
+router.put('/api/healthrecords', async(req: any, res: any) => {
     try {
         let usernames = req.body.username;
         let passwords = req.body.password;
         let type = '';
-
-        // if(req.body.type == 'Pharmacist'){
-        //     type = 'pharma';
-        // } else{
-        //     type = 'client';
-        // }
 
         let user = await Database.HealthRecords.find({username: usernames});
         console.log(JSON.stringify(user));
@@ -44,7 +38,36 @@ router.put('/api/healthrecords', async(req, res) => {
         res.sendStatus(500);
     }
 });
-router.put('/api/users', async(req, res) => {
+router.put('/api/deletedrug', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
+
+        let deleteResult = await Database.Drugs.deleteDrug({drugid: drugId});
+        // console.log(JSON.stringify(deleteResult) + " <<< we out hereeee");
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/adddrug', async(req: any, res: any) => {
+    try {
+        // let drugId = req.body;
+        console.log(req.body);
+
+        let insert = await Database.Drugs.addDrug(req.body);
+        console.log(JSON.stringify(insert) + " <<< we out hereeee");
+        res.json(insert);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/users', async(req: any, res: any) => {
     try {
         let usernames = req.body.username;
         let passwords = req.body.password;
@@ -65,7 +88,7 @@ router.put('/api/users', async(req, res) => {
     }
 });
 
-router.get('/api/healthrecords', async(req, res) => {
+router.get('/api/healthrecords', async(req: any, res: any) => {
     try {
         console.log(" made it here -------");
         let healthrecords = await Database.HealthRecords.listAllRecords();
@@ -77,21 +100,5 @@ router.get('/api/healthrecords', async(req, res) => {
         res.sendStatus(500);
     }
 });
-
-
-// router.get('/api/users', async(req, res) => {
-//     try {
-//         // let drugs = await Database.Drugs.listAllDrugs();
-//         console.log(" << in server >> ")
-//         let foo = req.body + " helooo ";
-//         res.json(foo);
-//     } catch (error) {
-//         console.log(error);
-//         res.sendStatus(500);
-//     }
-// });
-
-
-// router.use('/static', express.static(path.join(__dirname, 'public')))
 
 export default router;
