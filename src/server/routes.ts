@@ -10,13 +10,13 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 
-router.get('/api/hello', (req, res, next) => {
+router.get('/api/hello', (req: any, res: any, next: any) => {
     res.json('Rahman');
 });
 
-router.get('/api/drugs', async(req, res) => {
+router.get('/api/drugs', async(req: any, res: any) => {
     try {
-        console.log(" made it here");
+     //   console.log(" made it here");
         let drugs = await Database.Drugs.listAllDrugs();
         res.json(drugs);
     } catch (error) {
@@ -24,16 +24,63 @@ router.get('/api/drugs', async(req, res) => {
         res.sendStatus(500);
     }
 });
-router.put('/api/users', async(req, res) => {
+router.put('/api/healthrecords', async(req: any, res: any) => {
     try {
-        console.log(" in users server");
+        let usernames = req.body.username;
+        let passwords = req.body.password;
+        let type = '';
 
-        let username = req.body.username;
-        let password = req.body.password;
+        let user = await Database.HealthRecords.find({username: usernames});
+        console.log(JSON.stringify(user));
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/deletedrug', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
 
-        console.log(username);
+        let deleteResult = await Database.Drugs.deleteDrug({drugid: drugId});
+        // console.log(JSON.stringify(deleteResult) + " <<< we out hereeee");
+        res.json(deleteResult);
 
-        let user = await Database.Users.validate({username:'rahman', password: '8002'});
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/adddrug', async(req: any, res: any) => {
+    try {
+        // let drugId = req.body;
+        console.log(req.body);
+
+        let insert = await Database.Drugs.addDrug(req.body);
+        console.log(JSON.stringify(insert) + " <<< we out hereeee");
+        res.json(insert);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/users', async(req: any, res: any) => {
+    try {
+        let usernames = req.body.username;
+        let passwords = req.body.password;
+        let type = '';
+
+        if(req.body.type == 'Pharmacist'){
+            type = 'pharma';
+        } else{
+            type = 'client';
+        }
+
+        let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
+        console.log(JSON.stringify(user));
         res.json(user);
     } catch (error) {
         console.log(error);
@@ -60,5 +107,19 @@ router.put('/api/signup', async(req,res)=>{
     }
 })
 
+
+export default router;
+router.get('/api/healthrecords', async(req: any, res: any) => {
+    try {
+        console.log(" made it here -------");
+        let healthrecords = await Database.HealthRecords.listAllRecords();
+        console.log(" made it here ------- mmmm");
+        res.json(healthrecords);
+        console.log("yuhhhhh kelvin is gay");
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
 export default router;
