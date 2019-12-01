@@ -67,6 +67,7 @@ class SignUp extends React.Component {
 		if(validInfo(this.state)){
 			this.submit();
 			alert("account created, press ok to go to sign in!");
+			// @ts-ignore
 			this.props.history.push('./login');
 		}else{
 			console.log("Invalid information");
@@ -169,5 +170,5 @@ class SignUp extends React.Component {
 		);
 	}
 }
-
-export default withRouter(SignUp);
+// @ts-ignore
+export default withRouter(SignUp); 

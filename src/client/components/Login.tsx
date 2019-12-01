@@ -88,8 +88,10 @@ class Login extends React.Component{
             console.log(" yuhh ");
 
             if(ActiveLogin.state.type[0] == 'Client'){
+                // @ts-ignore
                 this.props.history.push('./userpage');
             } else if(ActiveLogin.state.type[0] == 'Pharmacist'){
+                // @ts-ignore
                 this.props.history.push('./pharmacist');
             }
 
@@ -137,5 +139,5 @@ class Login extends React.Component{
         )
     }
 }
-
+// @ts-ignore
 export default withRouter(Login);

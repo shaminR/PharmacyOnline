@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {Form, Button, DropdownButton, Dropdown, Table, Jumbotron} from 'react-bootstrap';
 import styled from 'styled-components';
-import ActiveLogin from '../ActiveLogin';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-// import 'react-bootstrap-table/css/react-bootstrap-table.css';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 
@@ -176,7 +173,8 @@ class DrugTable extends React.Component{
             <div style = {{paddingTop: '10px'}}>
 
                 <TableDiv>
-                   
+                    {/* 
+                    // @ts-ignore */}
                     <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
                         <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
