@@ -16,7 +16,7 @@ const FormDiv:any = styled.div`
     width: 300px;
     background-color: rgb(230, 230, 230);
     display:flex;
-    border-radius: 25px;
+    border-radius: .2rem;
     align-content: center;
     justify-content: center;
     padding-top: 40px;
@@ -101,7 +101,7 @@ class Login extends React.Component{
     
     render(){
         return(
-            <div style = {{paddingTop: '10px'}}>
+            <div style = {{paddingTop: '10px', marginTop: '40px'}}>
                 <FormDiv>
                     <Form onSubmit = {this.handleSubmit}>
                     <p style = {{color: '#23272b', fontWeight: 'bold', fontSize: '20'}}>

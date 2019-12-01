@@ -100,7 +100,7 @@ router.put('/api/signup', async(req,res)=>{
         const ICName = req.body.ICName; 
         const birthdate= (req.body.month) +"/"+(req.body.day)+"/"+(req.body.year);
          
-        let user = await Database.addUser.addUser({passwords: password, usernames: username});
+        let user = await Database.Users.addUser({passwords: password, usernames: username});
         let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username});
     }catch(error){
         console.log(error);

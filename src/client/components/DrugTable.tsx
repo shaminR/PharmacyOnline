@@ -164,10 +164,8 @@ class DrugTable extends React.Component{
     
     render(){
         const options = {
-            // afterInsertRow: this.onInsertRow,
             onAddRow: this.handleAddRowWithASyncError,
             afterDeleteRow: this.onDeleteRow,
-            // before
         }
         const selectRowProp = {
             mode: 'radio'
@@ -179,25 +177,25 @@ class DrugTable extends React.Component{
 
                 <TableDiv>
                    
-                    <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search>
+                    <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
-                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true}>
+                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                             DrugID
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='drugName'>
+                        <TableHeaderColumn dataField='drugName' tdStyle={ { whiteSpace: 'normal' } }>
                             Name
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='price'>
+                        <TableHeaderColumn dataField='price' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >
                             Price (CAD)
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='expiryYear'>
+                        <TableHeaderColumn dataField='expiryYear' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' } }>
                             Expiry Year
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='expiryMonth'>
+                        <TableHeaderColumn dataField='expiryMonth' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' } }>
                             Expiry Month
                         </TableHeaderColumn>
 

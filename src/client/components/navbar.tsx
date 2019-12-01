@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Card, Navbar, Button, Nav, Jumbotron} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
-// import img from './favicon2.png';
 
 const MyLink = styled(Link)`     
     text-decoration: none;
@@ -14,24 +13,21 @@ const MyLink = styled(Link)`
     }
     
 `
-
-
-
 const SignUp = styled(Link)`     
     text-decoration: none;
-    color: black;
+    color: #333;
     &:hover {
-        color: rgba(255,255,255,.75);
+        color: white;
+        background-color: black;
         text-decoration: none;
     }
     background-color: #e9ecef;
-    padding: 7px;
-    border-radius: 2px;
+    padding: 7px 10px;
+    border-radius: 3px;
     font-size: 12;
     float:right;
 }
 `
-
 class CustomNavbar extends React.Component{
 
     render(){

@@ -9,18 +9,20 @@ import './react-bootstrap-table-all.min.css';
 import './table.scss';
 
 const FirstCol = styled.div`
-    width: 60%;
+    // width: 60%;
     padding: 0 20px 0 0;
     float: left;
     background-color: rgb(230, 230, 230);
+    padding-top: 10px;
+    margin-top: 20px;
     border-radius: 10px;
     overflow-y:auto;
     overflow-x:hidden;
 `
 const SecondCol = styled.div`
-    width: 40%;
+    // width: 40%;
     padding-top: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
     float: right;
     border: 5px solid #cacaca;
     border-radius: 10px;
@@ -29,25 +31,44 @@ const SecondCol = styled.div`
 `
 const Title = styled.h1`
     font-size: 28px;
-    color: #0091ea;
+    color: #007bff;
     float: center;
     display:flex;
     justify-content: center;
     align-content: center;
+`
+const NameTitle = styled.h1`
+    font-size: 36px;
+    font-weight: bold;
+    font-family: Arial, Sans;
+    color: #007bff;
+    float: center;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+`
+const GridContainer = styled.div`
+    column-gap: 30px;
+    width: 117%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 `
 class Pharmacist extends React.Component{
 
     render(){
         return(
             <>
-            <FirstCol>
-                yuh
-            </FirstCol>
+            <GridContainer>
+                <FirstCol>
+                    <NameTitle> Welcome, {ActiveLogin.state.username} </NameTitle>
+                </FirstCol>
 
-            <SecondCol>
-                <Title> Drugs In Stock </Title>
-                <DrugTable/>
-            </SecondCol>
+                <SecondCol>
+                    <Title> Drugs In Stock </Title>
+                    <DrugTable/>
+                </SecondCol>
+            </GridContainer>
             </>
         )
     }
