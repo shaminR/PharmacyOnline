@@ -13,12 +13,19 @@ const FirstCol = styled.div`
     padding: 0 20px 0 0;
     float: left;
     background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+    overflow-y:auto;
+    overflow-x:hidden;
 `
 const SecondCol = styled.div`
     width: 40%;
     padding-top: 10px;
+    margin-top: 10px;
     float: right;
-    // background-color: red;
+    border: 5px solid #cacaca;
+    border-radius: 10px;
+    overflow-y:auto;
+    overflow-x:hidden;
 `
 const Title = styled.h1`
     font-size: 28px;

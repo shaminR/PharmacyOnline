@@ -32,10 +32,7 @@ class DrugTable extends React.Component{
         this.deleteDrug(rowKeys);
     }
 
-    // errorCheck = (row: any) => {
-    //     console.log(row + " in errpr check ");
-    // }
-    handleAddRowWithASyncError  = (row: any, colInfo: any, errorCallback: any) => {
+    handleAddRowWithASyncError  = (row: any, colInfo: any, errorCallback: any) => { 
         
         const price = +row.price;
         const id = +row.drugid;
