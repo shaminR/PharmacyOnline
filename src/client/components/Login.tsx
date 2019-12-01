@@ -88,9 +88,9 @@ class Login extends React.Component{
             console.log(" yuhh ");
 
             if(ActiveLogin.state.type[0] == 'Client'){
-                console.log("in yuh");
                 this.props.history.push('./userpage');
-                console.log("in bruh");
+            } else if(ActiveLogin.state.type[0] == 'Pharmacist'){
+                this.props.history.push('./pharmacist');
             }
 
         } catch (error) {

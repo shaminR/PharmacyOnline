@@ -89,7 +89,7 @@ router.put('/api/users', async(req: any, res: any) => {
 });
 
 router.put('/api/signup', async(req,res)=>{
-    console.log("in signup");
+    // console.log("in signup");
     try{
         const fname = req.body.fname;
         const password = req.body.password;
@@ -100,15 +100,13 @@ router.put('/api/signup', async(req,res)=>{
         const ICName = req.body.ICName; 
         const birthdate= (req.body.month) +"/"+(req.body.day)+"/"+(req.body.year);
          
-        let user = await Database.addUser.addUser({passwords: password, usernames: username})
-        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName})
+        let user = await Database.addUser.addUser({passwords: password, usernames: username});
+        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username});
     }catch(error){
         console.log(error);
     }
 })
 
-
-export default router;
 router.get('/api/healthrecords', async(req: any, res: any) => {
     try {
         console.log(" made it here -------");
