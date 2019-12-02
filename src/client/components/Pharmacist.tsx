@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Form, Button, DropdownButton, Dropdown, Table, Jumbotron} from 'react-bootstrap';
+import {Form, Button, DropdownButton, Dropdown, Table, Jumbotron, ButtonToolbar} from 'react-bootstrap';
 import styled from 'styled-components';
 import ActiveLogin from '../ActiveLogin';
 import DrugTable from './DrugTable';
@@ -52,9 +52,35 @@ const GridContainer = styled.div`
     width: 117%;
     height: 90%;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+`
+const MyButtonToolbar = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    // background-color: red;
+    gap: 10px;
 `
 class Pharmacist extends React.Component{
+
+    state = {
+        display: 'allDrugs',
+    }
+
+    sideDisplay = () => {
+        console.log("in sideDisplay << ");
+        if(this.state.display == 'allDrugs'){
+            return <DrugTable />;
+        } else if(this.state.display == 'orders'){
+            return <h1> this is the orders list </h1>;
+        }
+    }
+    
+    toolBarButtons = (e: any) => {
+        this.setState({
+            display: e.target.id
+        });
+    }
 
     render(){
         return(
@@ -62,11 +88,17 @@ class Pharmacist extends React.Component{
             <GridContainer>
                 <FirstCol>
                     <NameTitle> Welcome, {ActiveLogin.state.username} </NameTitle>
+
+                    <MyButtonToolbar>
+                        <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "allDrugs">View Drugs</Button>
+                        <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "orders">View Orders</Button>
+                    </MyButtonToolbar>
+
                 </FirstCol>
 
                 <SecondCol>
                     <Title> Drugs In Stock </Title>
-                    <DrugTable/>
+                    {this.sideDisplay()}
                 </SecondCol>
             </GridContainer>
             </>
