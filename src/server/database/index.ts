@@ -3,6 +3,7 @@ import config from '../config';
 import Drugs from './drugs';
 import Users from './users';
 import Client from './client';
+import Orders from './orders';
 import HealthRecords from './healthRecords';
 
 export const Connection = mysql.createConnection(config.mysql);
@@ -17,5 +18,6 @@ export default {
     Drugs,
     Users,
     Client,
-    HealthRecords
+    HealthRecords,
+    Orders
 }
