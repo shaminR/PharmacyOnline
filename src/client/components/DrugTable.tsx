@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
+import './dialogBox.css';
 
 const TableDiv = styled.div`
     margin: auto;
@@ -13,7 +14,9 @@ const TableDiv = styled.div`
     border-radius: 10px;
     align-content: center;
     justify-content: center;
-    // padding-top: 40px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 `
 
 class DrugTable extends React.Component{
