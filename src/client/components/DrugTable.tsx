@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {Form, Button, DropdownButton, Dropdown, Table, Jumbotron} from 'react-bootstrap';
 import styled from 'styled-components';
-import ActiveLogin from '../ActiveLogin';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-// import 'react-bootstrap-table/css/react-bootstrap-table.css';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 
@@ -32,10 +29,7 @@ class DrugTable extends React.Component{
         this.deleteDrug(rowKeys);
     }
 
-    // errorCheck = (row: any) => {
-    //     console.log(row + " in errpr check ");
-    // }
-    handleAddRowWithASyncError  = (row: any, colInfo: any, errorCallback: any) => {
+    handleAddRowWithASyncError  = (row: any, colInfo: any, errorCallback: any) => { 
         
         const price = +row.price;
         const id = +row.drugid;
@@ -167,10 +161,8 @@ class DrugTable extends React.Component{
     
     render(){
         const options = {
-            // afterInsertRow: this.onInsertRow,
             onAddRow: this.handleAddRowWithASyncError,
             afterDeleteRow: this.onDeleteRow,
-            // before
         }
         const selectRowProp = {
             mode: 'radio'
@@ -181,26 +173,27 @@ class DrugTable extends React.Component{
             <div style = {{paddingTop: '10px'}}>
 
                 <TableDiv>
-                   
-                    <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search>
+                    {/* 
+                    // @ts-ignore */}
+                    <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
-                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true}>
+                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                             DrugID
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='drugName'>
+                        <TableHeaderColumn dataField='drugName' tdStyle={ { whiteSpace: 'normal' } }>
                             Name
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='price'>
+                        <TableHeaderColumn dataField='price' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >
                             Price (CAD)
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='expiryYear'>
+                        <TableHeaderColumn dataField='expiryYear' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' } }>
                             Expiry Year
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='expiryMonth'>
+                        <TableHeaderColumn dataField='expiryMonth' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' } }>
                             Expiry Month
                         </TableHeaderColumn>
 

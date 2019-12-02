@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Card, Navbar, Button, Nav} from 'react-bootstrap';
+import {Card, Navbar, Button, Nav, Jumbotron} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
-// import img from './favicon2.png';
 
 const MyLink = styled(Link)`     
     text-decoration: none;
@@ -12,8 +11,23 @@ const MyLink = styled(Link)`
         color: rgba(255,255,255,.75);
         text-decoration: none;
     }
+    
 `
-
+const SignUp = styled(Link)`     
+    text-decoration: none;
+    color: #333;
+    &:hover {
+        color: white;
+        background-color: black;
+        text-decoration: none;
+    }
+    background-color: #e9ecef;
+    padding: 7px 10px;
+    border-radius: 3px;
+    font-size: 12;
+    float:right;
+}
+`
 class CustomNavbar extends React.Component{
 
     render(){
@@ -35,7 +49,9 @@ class CustomNavbar extends React.Component{
                         <MyLink to="./login">Sign in</MyLink>
                     </Nav.Link>
                 </Nav>
-                <Button variant="dark">Sign Up</Button>
+                <Nav.Link>
+                        <SignUp to="./signup">Sign Up</SignUp>
+                </Nav.Link>
             </Navbar>
         </>
         );
