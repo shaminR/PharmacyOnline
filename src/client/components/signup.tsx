@@ -10,6 +10,10 @@ const FormDiv = styled.div`
 	justify-content: center;
 	padding: 20px;
 `
+const SignUpJumbo = styled(Jumbotron)`
+	padding: 1rem 2rem;
+	background-color: red;
+`
 function validInfo(props: any){
 	// need to chack the database later to see if name is taken and such
 	// how do i error check insurance and ahn :(
@@ -63,6 +67,7 @@ class SignUp extends React.Component {
 		if(validInfo(this.state)){
 			this.submit();
 			alert("account created, press ok to go to sign in!");
+			// @ts-ignore
 			this.props.history.push('./login');
 		}else{
 			console.log("Invalid information");
@@ -95,7 +100,8 @@ class SignUp extends React.Component {
 		return (
 			<FormDiv>
 				<Container>
-				 <Jumbotron> 
+				 <SignUpJumbo> 
+					 <h1>Enter Details</h1>
 						<Form.Row>
 							<Form.Group as = {Col} md = "4" >
 								<Form.Label>First name</Form.Label>
@@ -158,11 +164,11 @@ class SignUp extends React.Component {
 								Submit
 							</Button>
 						</div>
-					</Jumbotron>
+					</SignUpJumbo>
 				</Container>
 			</FormDiv>
 		);
 	}
 }
-
-export default withRouter(SignUp);
+// @ts-ignore
+export default withRouter(SignUp); 
