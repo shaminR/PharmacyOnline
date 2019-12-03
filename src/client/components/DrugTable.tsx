@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
+import './dialogBox.css';
 
 const TableDiv = styled.div`
     margin: auto;
@@ -13,7 +14,9 @@ const TableDiv = styled.div`
     border-radius: 10px;
     align-content: center;
     justify-content: center;
-    // padding-top: 40px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 `
 
 class DrugTable extends React.Component{
@@ -35,47 +38,31 @@ class DrugTable extends React.Component{
         const id = +row.drugid;
         const month = +row.expiryMonth;
         const year = +row.expiryYear;
-        // console.log(row);
-        if(Number.isNaN(price) || Number.isNaN(id) || Number.isNaN(month) || Number.isNaN(year)){
-            alert("Please enter valid number!");
-        }else{
-            const temp: any = {drugid: id, drugName: row.drugName, price: price, expiryYear: year, expiryMonth: month};
-            this.state.drugs.push(temp);
-            this.insertDrug(temp);
-            this.forceUpdate();
-            console.log("pushed");
-        }
-    }
-
-    onInsertRow = (row: any) => {
-
-        let newValues = [];
-
-        const price = +row["price"];
-        const id = +row["drugid"];
-        const month = +row["expiryMonth"];
-        const year = +row["expiryYear"];
+        const amount = +row.stock;
         
-        if(Number.isNaN(price) || Number.isNaN(id) || Number.isNaN(month) || Number.isNaN(year)){
+        if(Number.isNaN(price) || Number.isNaN(id) || Number.isNaN(month) || Number.isNaN(year) || Number.isNaN(amount)){
             alert("Please enter valid number!");
-            // this.onDeleteRow(id, false);
             return;
-        }else{
-            alert("congratz!");
         }
-
-        newValues["drugid"] = row["drugid"];
-        newValues["drugName"] = row["drugName"];
-        newValues["expiryMonth"] = row["expiryMonth"];
-        newValues["expiryYear"] = row["expiryYear"];
-        newValues["price"] = row["price"];
-
-        let newRowStr = '';
-        // console.log([newValues]);
-        for (const prop in row) {
-            newRowStr += prop + ': ' + row[prop] + ' \n';
+        if(amount < 1){
+            alert("Please enter a valid amount!");
+            return;
         }
-        alert('You inserted:\n ' + newRowStr);
+        let isUnique: boolean = true;
+        this.state.drugs.forEach(element => {
+            if(id == element.drugid){
+                alert("please enter a unique drug id !");
+                isUnique = false;
+                return;
+            }
+        });
+        if(!isUnique) return;
+        
+        const temp: any = {drugid: id, drugName: row.drugName, price: price, expiryYear: year, expiryMonth: month, stock: amount};
+        this.state.drugs.push(temp);
+        this.insertDrug(temp);
+        this.forceUpdate();
+        console.log("pushed");
     }
 
     async insertDrug(details: any){
@@ -177,7 +164,7 @@ class DrugTable extends React.Component{
                     // @ts-ignore */}
                     <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
-                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                             DrugID
                         </TableHeaderColumn>
 
@@ -195,6 +182,10 @@ class DrugTable extends React.Component{
 
                         <TableHeaderColumn dataField='expiryMonth' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' } }>
                             Expiry Month
+                        </TableHeaderColumn>
+                        
+                        <TableHeaderColumn dataField='stock' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' } }>
+                            Stock
                         </TableHeaderColumn>
 
                     </BootstrapTable>

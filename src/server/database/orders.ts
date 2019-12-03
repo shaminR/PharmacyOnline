@@ -16,7 +16,7 @@ export const findClientOrders = async (req: any) => {
 
     const username = req.username;
  
-    const query = 'SELECT * from orders WHERE clientID = ?';
+    const query = 'SELECT * from orders WHERE clientAHN = ?';
     const args = [username];
 
     return new Promise((resolve, reject) => {

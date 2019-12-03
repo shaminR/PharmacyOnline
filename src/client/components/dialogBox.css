@@ -1,0 +1,23 @@
+.modal-title {
+	margin-bottom: 0;
+	line-height: 1.5;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+}
+
+.modal-content {
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	width: 100%;
+	pointer-events: auto;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0,0,0,.2);
+	border-radius: .3rem;
+	outline: 0;
+    margin-top: 100px;
+}

@@ -24,6 +24,16 @@ router.get('/api/drugs', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
+    try {
+     //   console.log(" made it here");
+        let orders = await Database.Orders.listAllOrders();
+        res.json(orders);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/healthrecords', async(req: any, res: any) => {
     try {
         let usernames = req.body.username;
@@ -44,7 +54,6 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
         console.log(drugId);
 
         let deleteResult = await Database.Drugs.deleteDrug({drugid: drugId});
-        // console.log(JSON.stringify(deleteResult) + " <<< we out hereeee");
         res.json(deleteResult);
 
     } catch (error) {
@@ -54,7 +63,6 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
 });
 router.put('/api/adddrug', async(req: any, res: any) => {
     try {
-        // let drugId = req.body;
         console.log(req.body);
 
         let insert = await Database.Drugs.addDrug(req.body);
@@ -78,7 +86,6 @@ router.put('/api/users', async(req: any, res: any) => {
         } else{
             type = 'client';
         }
-
         let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
         console.log(JSON.stringify(user));
         res.json(user);

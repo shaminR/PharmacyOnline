@@ -37,9 +37,10 @@ export const addDrug = async (req: any) => {
     const price = req.price;
     const year = req.expiryYear;
     const month = req.expiryMonth;
+    const amount = req.stock;
 
-    const query = 'INSERT into drugs (drugid, drugName, price, expiryYear, expiryMonth) values (?, ?, ?, ?, ?)';
-    const args = [id, name, price, year, month];
+    const query = 'INSERT into drugs (drugid, drugName, price, expiryYear, expiryMonth, stock) values (?, ?, ?, ?, ?, ?)';
+    const args = [id, name, price, year, month, amount];
 
     return new Promise((resolve, reject) => {
         Connection.query(query, args, (err, result) => {

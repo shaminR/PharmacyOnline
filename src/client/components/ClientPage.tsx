@@ -3,7 +3,7 @@ import {Form, Button, DropdownButton, Dropdown, Table, Jumbotron, Container} fro
 import styled from 'styled-components';
 import ActiveLogin from '../ActiveLogin';
 import DrugTable from './DrugTable';
-import MyTable from './table'
+import ClientOrdertable from './ClientOrdertable'
 const SubHead = styled.h2` 
     //font-family: 'Open Sans';
     font-size: 25px;
@@ -32,8 +32,8 @@ class ClientPage extends React.Component {
             </WelcomeMsg>
             <SubHead>Recent Orders: </SubHead>
             <Container>
-                <MyTable>   
-                </MyTable>
+                <ClientOrdertable>   
+                </ClientOrdertable>
             </Container>
             
             <ButtonDiv>
