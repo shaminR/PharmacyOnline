@@ -26,8 +26,9 @@ router.get('/api/drugs', async(req: any, res: any) => {
 });
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
-     //   console.log(" made it here");
-        let orders = await Database.Orders.listAllOrders();
+        const statusToFetch: Number = 1;
+
+        let orders = await Database.Orders.listStatusOrders({status: statusToFetch});
         res.json(orders);
     } catch (error) {
         console.log(error);
@@ -54,6 +55,21 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
         console.log(drugId);
 
         let deleteResult = await Database.Drugs.deleteDrug({drugid: drugId});
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/pharmacistChangeOrder', async(req: any, res: any) => {
+    try {
+        let orderid = req.body.id;
+        let statusToSet = req.body.status;
+        console.log("changed status of order: " + orderid + " to: " + statusToSet);
+        // console.log("status to set: " + statusToSet);
+
+        let deleteResult = await Database.Orders.changeStatus({id: orderid, status: statusToSet});
         res.json(deleteResult);
 
     } catch (error) {
