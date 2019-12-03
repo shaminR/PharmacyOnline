@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import ActiveLogin from '../ActiveLogin';
 import DrugTable from './DrugTable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-// import 'react-bootstrap-table/css/react-bootstrap-table.css';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 

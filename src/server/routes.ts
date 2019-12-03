@@ -44,7 +44,6 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
         console.log(drugId);
 
         let deleteResult = await Database.Drugs.deleteDrug({drugid: drugId});
-        // console.log(JSON.stringify(deleteResult) + " <<< we out hereeee");
         res.json(deleteResult);
 
     } catch (error) {
@@ -54,7 +53,6 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
 });
 router.put('/api/adddrug', async(req: any, res: any) => {
     try {
-        // let drugId = req.body;
         console.log(req.body);
 
         let insert = await Database.Drugs.addDrug(req.body);
@@ -78,7 +76,6 @@ router.put('/api/users', async(req: any, res: any) => {
         } else{
             type = 'client';
         }
-
         let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
         console.log(JSON.stringify(user));
         res.json(user);
