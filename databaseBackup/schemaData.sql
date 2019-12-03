@@ -89,6 +89,7 @@ CREATE TABLE `orders` (
   `drugname` varchar(45) NOT NULL,
   `clientAHN` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
+  `drugprice` double NOT NULL,
   PRIMARY KEY (`orderid`),
   KEY `fk_drug_idx` (`drugid`),
   KEY `fk_client_idx` (`clientAHN`),
@@ -103,7 +104,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,1,5,'Aspirin',78877,1);
+INSERT INTO `orders` VALUES (1,1,5,'Aspirin',78877,1,12.99);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-02 17:19:20
+-- Dump completed on 2019-12-02 17:41:01

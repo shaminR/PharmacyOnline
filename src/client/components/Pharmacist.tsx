@@ -3,6 +3,7 @@ import {Form, Button, DropdownButton, Dropdown, Table, Jumbotron, ButtonToolbar}
 import styled from 'styled-components';
 import ActiveLogin from '../ActiveLogin';
 import DrugTable from './DrugTable';
+import PharmacistOrderTable from './PharmacistOrderTable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
@@ -69,9 +70,19 @@ class Pharmacist extends React.Component{
     sideDisplay = () => {
         console.log("in sideDisplay << ");
         if(this.state.display == 'allDrugs'){
-            return <DrugTable />;
+            return (
+                <>
+                    <Title> Drugs In Stock </Title>
+                    <DrugTable />
+                </>
+            );
         } else if(this.state.display == 'orders'){
-            return <h1> this is the orders list </h1>;
+            return (
+                <>
+                    <Title> Client Orders </Title>
+                    <PharmacistOrderTable />
+                </>
+            );
         }
     }
     
@@ -96,7 +107,7 @@ class Pharmacist extends React.Component{
                 </FirstCol>
 
                 <SecondCol>
-                    <Title> Drugs In Stock </Title>
+                    {/* <Title> Drugs In Stock </Title> */}
                     {this.sideDisplay()}
                 </SecondCol>
             </GridContainer>

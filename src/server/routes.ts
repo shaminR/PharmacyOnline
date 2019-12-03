@@ -24,6 +24,16 @@ router.get('/api/drugs', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
+    try {
+     //   console.log(" made it here");
+        let orders = await Database.Orders.listAllOrders();
+        res.json(orders);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/healthrecords', async(req: any, res: any) => {
     try {
         let usernames = req.body.username;
