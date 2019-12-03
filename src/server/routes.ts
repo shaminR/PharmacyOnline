@@ -1,5 +1,6 @@
 // import * as express from 'express';
 import Database from './database';
+import { listAllClients } from './database/client';
 
 var express = require('express');
 const router = express.Router();
@@ -35,6 +36,15 @@ router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.get('/api/getAllClients', async(req: any, res: any) => {
+    try {
+        let orders = await Database.Client.listAllClients();
+        res.json(orders);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/healthrecords', async(req: any, res: any) => {
     try {
         let usernames = req.body.username;
@@ -44,6 +54,21 @@ router.put('/api/healthrecords', async(req: any, res: any) => {
         let user = await Database.HealthRecords.find({username: usernames});
         console.log(JSON.stringify(user));
         res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/getDrugStock', async(req: any, res: any) => {
+    try {
+
+        let id = req.body.id;
+        console.log(" yuhh " + id);
+
+        let result = await Database.Drugs.getStock(id);
+        console.log(JSON.stringify(result));
+        res.json(result);
+
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -67,7 +92,6 @@ router.put('/api/pharmacistChangeOrder', async(req: any, res: any) => {
         let orderid = req.body.id;
         let statusToSet = req.body.status;
         console.log("changed status of order: " + orderid + " to: " + statusToSet);
-        // console.log("status to set: " + statusToSet);
 
         let deleteResult = await Database.Orders.changeStatus({id: orderid, status: statusToSet});
         res.json(deleteResult);

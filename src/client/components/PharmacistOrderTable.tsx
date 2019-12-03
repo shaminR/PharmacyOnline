@@ -4,6 +4,7 @@ import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-t
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
+const util = require('util');
 
 const TableDiv = styled.div`
     margin: auto;
@@ -23,21 +24,37 @@ class PharmacistOrderTable extends React.Component{
 
     state = {
         orders: [],
-        selected: ''
+        selected: {
+            orderid: '',
+            amount: '',
+            drugid: ''
+        }
     }
 
     onSelectRow = (row: any, isSelected: boolean, e: any) => {
-        this.state.selected = row.orderid;
+        this.state.selected.orderid = row.orderid;
+        this.state.selected.amount = row.amount;
+        this.state.selected.drugid = row.drugid;
     }
-    acceptOrder = (onClick: any) => {
-        console.log("selected is:" + this.state.selected);
-        this.changeOrderStatus(+this.state.selected);
+    acceptOrder = async (onClick: any) => {
+        console.log("selected is:" + this.state.selected.orderid);
+        console.log("amount is: " +  this.state.selected.amount);
+        console.log("drugid is: " +  this.state.selected.drugid);
 
-        for (var i = this.state.orders.length - 1; i >= 0; --i) {
-            if (this.state.orders[i].orderid == this.state.selected) {
-                this.state.orders.splice(i,1);
-            }
+        const stock = await this.getDrugStock(+this.state.selected.drugid);
+
+        if(stock < this.state.selected.amount){
+            console.log("too much requested, not enough stock!");
+        } else{
+            console.log("there is enough!");
         }
+        // this.changeOrderStatus(+this.state.selected.orderid);
+
+        // for (var i = this.state.orders.length - 1; i >= 0; --i) {
+        //     if (this.state.orders[i].orderid == this.state.selected.orderid) {
+        //         this.state.orders.splice(i,1);
+        //     }
+        // }
         this.forceUpdate();
     }
 
@@ -49,6 +66,29 @@ class PharmacistOrderTable extends React.Component{
 		} catch (error) {
 			console.log(error);
 		}
+    }
+
+    async getDrugStock(drugid: Number){
+        try {
+            let r = await fetch('/api/getDrugStock', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id': drugid})
+            });
+            let result = await r.json();
+            const stock =  result[0].stock;
+            console.log("the stock is " + stock);
+
+            return new Promise((resolve, reject) => {
+                resolve(stock);
+            });
+        
+        } catch (error) {
+            console.log(error);
+            console.log("error in getting drug stock");
+        }
     }
 
     async changeOrderStatus(orderid: number) {
@@ -85,15 +125,13 @@ class PharmacistOrderTable extends React.Component{
 
     render(){
         const options = {
-            // onAddRow: this.handleAddRowWithASyncError,
             deleteBtn: this.createCustomInsertButton,
             noDataText: 'Currently no orders to accept!',
-            // afterDeleteRow: this.onDeleteRow,
         }
         const selectRowProp = {
             mode: 'radio',
-            clickToSelect: true,
             onSelect: this.onSelectRow,
+            bgColor: 'gold'
         }
         return(
             <div style = {{paddingTop: '10px'}}>
