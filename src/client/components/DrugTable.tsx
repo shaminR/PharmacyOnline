@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
+import {Modal, Button, Form} from 'react-bootstrap';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
@@ -18,14 +19,23 @@ const TableDiv = styled.div`
     padding-left: 10px;
     padding-right: 10px;
 `
-
+const ButtonDiv:any = styled.div`     
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    padding-top: 10px;
+`
 class DrugTable extends React.Component{
 
     state = {
-        username: '',
-        password: '',
         type: '',
-        drugs:[]
+        selectedDrug: {
+            id: '',
+            name: ''
+        },
+        drugs: [],
+        modalVisibility: false,
+        amountToAdd: ''
     }
 
     onDeleteRow = (rowKeys: any) => {
@@ -115,6 +125,11 @@ class DrugTable extends React.Component{
 			console.log(error);
 		}
     }
+
+    closeModal = () => {
+        this.state.modalVisibility = false;
+        this.forceUpdate();
+    }
     
     getAllRecords = () => {
         console.log(this.state.type);
@@ -145,15 +160,88 @@ class DrugTable extends React.Component{
             console.log(error);
         }
     }
+
+    addStockAction = (onclick: any) => {
+        if(!(this.state.selectedDrug.id == '')){
+            this.setState({
+                modalVisibility: true
+            });
+        }
+    }
+    onSelectRow = (row: any, isSelected: boolean, e: any) => {
+        this.state.selectedDrug.id = row.drugid;
+        this.state.selectedDrug.name = row.drugName;
+    }
+    handleAddChange = (e: any) => {
+        this.setState({
+           amountToAdd: e.target.value 
+        });
+    }
+    submitAdd = () => {
+        const amount = +this.state.amountToAdd;
+
+        if(Number.isNaN(amount)){
+            alert("must enter a number to add");
+            return;
+        } else if(amount < 1){
+            alert("must enter a number greater than 1");
+            return;
+        }
+
+        console.log("amount to add is: " + amount);
+        this.addStock();
+
+        this.setState({
+            modalVisibility: false
+        });
+    }
+
+    async addStock(){
+        try {
+            let r = await fetch('/api/addDrugStock', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id': this.state.selectedDrug.id, 'amount': this.state.amountToAdd})
+            });
+            let result = await r.json();
+
+            if(result == 'success'){
+                console.log("successfully added stock of drug: " + this.state.selectedDrug.id + " by " + this.state.amountToAdd);
+                this.componentDidMount();
+            }else{
+                console.log("error in reducing stock");
+            }
+        
+        } catch (error) {
+            console.log(error);
+            console.log("error in reduce drug stock");
+        }
+    }
+
+    createCustomExportCSVButton = (onClick: any) => {
+        return (
+            <DeleteButton
+                btnText='Add More Stock'
+                btnContextual='btn-warning'
+                className='my-custom-class'
+                btnGlyphicon='glyphicon-edit'
+                onClick={ () => this.addStockAction(onClick) }
+            />
+        );
+    }
     
     render(){
         const options = {
             onAddRow: this.handleAddRowWithASyncError,
             afterDeleteRow: this.onDeleteRow,
+            exportCSVBtn: this.createCustomExportCSVButton,
         }
         const selectRowProp = {
             mode: 'radio',
             clickToSelect: true,
+            onSelect: this.onSelectRow,
             bgColor: 'gold'
         }
 
@@ -164,7 +252,7 @@ class DrugTable extends React.Component{
                 <TableDiv>
                     {/* 
                     // @ts-ignore */}
-                    <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
+                    <BootstrapTable data={this.state.drugs} exportCSV striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
                         <TableHeaderColumn isKey dataField='drugid' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                             DrugID
@@ -192,6 +280,27 @@ class DrugTable extends React.Component{
 
                     </BootstrapTable>
                 </TableDiv>
+
+                <Modal show = {this.state.modalVisibility} onHide = {this.closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Adding stock of {this.state.selectedDrug.name} </Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+
+                        <Form>
+                            <Form.Group controlId="formGroupEmail">
+                                <Form.Label>Amount to add</Form.Label>
+                                <Form.Control type="username" placeholder="Amount" id = "amountAdded" onChange = {this.handleAddChange}/>
+                            </Form.Group>
+
+                            <ButtonDiv>
+                                <Button variant="primary" onClick = {this.submitAdd} >Add</Button>
+                            </ButtonDiv>
+                        </Form>
+
+                    </Modal.Body>
+                </Modal>
 
             </div>
         )

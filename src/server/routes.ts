@@ -132,6 +132,26 @@ router.put('/api/reduceDrugStock', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/addDrugStock', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        let addAmount = +req.body.amount;
+
+        let result = await Database.Drugs.getStock(drugid);
+        let currStock = result[0].stock;
+        let newStock = currStock + addAmount;
+
+        result = await Database.Drugs.setStock({id: drugid, stock: newStock});
+
+        console.log(JSON.stringify(currStock) + " new: " + newStock);
+        
+        res.json(result);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/getDrugStock', async(req: any, res: any) => {
     try {
 
