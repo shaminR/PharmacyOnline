@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `pharmacy` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+CREATE DATABASE  IF NOT EXISTS `pharmacy` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `pharmacy`;
 -- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: pharmacy
 -- ------------------------------------------------------
--- Server version	8.0.15
+-- Server version	8.0.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -87,13 +87,13 @@ CREATE TABLE `orders` (
   `drugid` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `drugname` varchar(45) NOT NULL,
-  `clientAHN` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `drugprice` double NOT NULL,
+  `clientUsername` varchar(45) NOT NULL,
   PRIMARY KEY (`orderid`),
   KEY `fk_drug_idx` (`drugid`),
-  KEY `fk_client_idx` (`clientAHN`),
-  CONSTRAINT `fk_client` FOREIGN KEY (`clientAHN`) REFERENCES `client` (`AHN`),
+  KEY `fk_client_idx` (`clientUsername`),
+  CONSTRAINT `fk_client` FOREIGN KEY (`clientUsername`) REFERENCES `users` (`username`),
   CONSTRAINT `fk_drug` FOREIGN KEY (`drugid`) REFERENCES `drugs` (`drugid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -104,7 +104,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,1,5,'Aspirin',78877,1,12.99);
+INSERT INTO `orders` VALUES (1,88,10,'crack cocaine',1,88.99,'abnoot');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-02 17:41:01
+-- Dump completed on 2019-12-03 17:03:47

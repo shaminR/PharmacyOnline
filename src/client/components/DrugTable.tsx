@@ -152,7 +152,9 @@ class DrugTable extends React.Component{
             afterDeleteRow: this.onDeleteRow,
         }
         const selectRowProp = {
-            mode: 'radio'
+            mode: 'radio',
+            clickToSelect: true,
+            bgColor: 'gold'
         }
 
         return(

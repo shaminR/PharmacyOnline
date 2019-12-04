@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ActiveLogin from '../ActiveLogin';
 import DrugTable from './DrugTable';
 import PharmacistOrderTable from './PharmacistOrderTable';
+import PharmacistClientTable from './PharmacistClientTable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
@@ -68,7 +69,6 @@ class Pharmacist extends React.Component{
     }
 
     sideDisplay = () => {
-        console.log("in sideDisplay << ");
         if(this.state.display == 'allDrugs'){
             return (
                 <>
@@ -81,6 +81,13 @@ class Pharmacist extends React.Component{
                 <>
                     <Title> Client Orders </Title>
                     <PharmacistOrderTable />
+                </>
+            );
+        } else if(this.state.display == 'clients'){
+            return (
+                <>
+                    <Title> Clients </Title>
+                    <PharmacistClientTable />
                 </>
             );
         }
@@ -102,12 +109,12 @@ class Pharmacist extends React.Component{
                     <MyButtonToolbar>
                         <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "allDrugs">View Drugs</Button>
                         <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "orders">View Orders</Button>
+                        <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "clients">View Clients</Button>
                     </MyButtonToolbar>
 
                 </FirstCol>
 
                 <SecondCol>
-                    {/* <Title> Drugs In Stock </Title> */}
                     {this.sideDisplay()}
                 </SecondCol>
             </GridContainer>
