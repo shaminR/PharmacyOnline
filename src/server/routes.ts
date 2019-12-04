@@ -14,6 +14,16 @@ router.use(bodyParser.json());
 router.get('/api/hello', (req: any, res: any, next: any) => {
     res.json('Rahman');
 });
+router.get('/api/orders', async(req: any, res: any) => {
+    try {
+     //   console.log(" made it here");
+        let orders = await Database.Orders.listAllOrders();
+        res.json(orders);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
 router.get('/api/drugs', async(req: any, res: any) => {
     try {
@@ -49,6 +59,25 @@ router.get('/api/driverDrugs',async(req: any, res: any) =>{
         res.sendStatus(500);
     }
 })
+router.put('/api/getAllClientOrders', async(req: any, res: any) => {
+    try {
+        console.log(req + "\\\\\\\\\\\\\\\\\\ \n");
+        let usernames =  req.body.username;
+     
+        let passwords = req.body.password;
+        let type = '';
+        
+        console.log(usernames + " yuhhhh \n");
+
+        let user = await Database.Orders.findClientOrders({clientUsername: usernames});
+        console.log(" made it here");
+        console.log(JSON.stringify(user));
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
@@ -184,11 +213,11 @@ router.put('/api/signup', async(req,res)=>{
 
 router.get('/api/healthrecords', async(req: any, res: any) => {
     try {
-        console.log(" made it here -------");
+      //  console.log(" made it here -------");
         let healthrecords = await Database.HealthRecords.listAllRecords();
-        console.log(" made it here ------- mmmm");
+       // console.log(" made it here ------- mmmm");
         res.json(healthrecords);
-        console.log("yuhhhhh kelvin is gay");
+       // console.log("yuhhhhh kelvin is gay");
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
