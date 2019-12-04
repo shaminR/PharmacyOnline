@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
-import {Modal, Button, Form} from 'react-bootstrap';
+import { Modal, Button, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
@@ -35,7 +35,17 @@ class DrugTable extends React.Component{
         },
         drugs: [],
         modalVisibility: false,
-        amountToAdd: ''
+        dropdownModal: false,
+        amountToAdd: '',
+        dropdownType: '',
+        rowToAdd: {
+            name: '',
+            price: '',
+            drugid: '',
+            expiryMonth: '',
+            expiryYear: '',
+            stock: '',
+        }
     }
 
     onDeleteRow = (rowKeys: any) => {
@@ -44,11 +54,26 @@ class DrugTable extends React.Component{
 
     handleAddRowWithASyncError  = (row: any, colInfo: any, errorCallback: any) => { 
         
-        const price = +row.price;
-        const id = +row.drugid;
-        const month = +row.expiryMonth;
-        const year = +row.expiryYear;
-        const amount = +row.stock;
+        this.state.rowToAdd.price = row.price;
+        this.state.rowToAdd.drugid = row.drugid;
+        this.state.rowToAdd.expiryMonth = row.expiryMonth;
+        this.state.rowToAdd.expiryYear = row.expiryYear;
+        this.state.rowToAdd.stock = row.stock;
+        this.state.rowToAdd.name = row.drugName;
+
+        // this.errorCheckAndAdd();
+        this.setState({
+            dropdownModal: true
+        })
+    }
+
+    errorCheckAndAdd = () => {
+
+        const price = +this.state.rowToAdd.price;
+        const id = +this.state.rowToAdd.drugid;
+        const month = + this.state.rowToAdd.expiryMonth;
+        const year = +this.state.rowToAdd.expiryYear;
+        const amount = +this.state.rowToAdd.stock;
         
         if(Number.isNaN(price) || Number.isNaN(id) || Number.isNaN(month) || Number.isNaN(year) || Number.isNaN(amount)){
             alert("Please enter valid number!");
@@ -68,7 +93,12 @@ class DrugTable extends React.Component{
         });
         if(!isUnique) return;
         
-        const temp: any = {drugid: id, drugName: row.drugName, price: price, expiryYear: year, expiryMonth: month, stock: amount};
+        const typeToAdd = this.state.dropdownType;
+        if(typeToAdd == ''){
+            alert("please select a type");
+        }
+
+        const temp: any = {drugid: id, drugName: this.state.rowToAdd.name, price: price, type: typeToAdd, expiryYear: year, expiryMonth: month, stock: amount};
         this.state.drugs.push(temp);
         this.insertDrug(temp);
         this.forceUpdate();
@@ -128,6 +158,11 @@ class DrugTable extends React.Component{
 
     closeModal = () => {
         this.state.modalVisibility = false;
+        this.forceUpdate();
+    }
+    closeDropdownModal = () => {
+        // this.state.modalVisibility = false;
+        alert("sry cant close");
         this.forceUpdate();
     }
     
@@ -196,6 +231,21 @@ class DrugTable extends React.Component{
         });
     }
 
+    submitDropdownAdd = () => {
+        console.log("pressed ");
+
+        if(this.state.dropdownType == ''){
+            alert("Please choose a type");
+        }
+
+        console.log("type of drug being added : " + this.state.dropdownType);
+        this.errorCheckAndAdd();
+
+        this.setState({
+            dropdownModal: false
+        });
+    }
+
     async addStock(){
         try {
             let r = await fetch('/api/addDrugStock', {
@@ -231,6 +281,12 @@ class DrugTable extends React.Component{
             />
         );
     }
+
+    dropListener = (e: any) => {
+        this.setState({
+            dropdownType: e.target.value
+        })
+    }
     
     render(){
         const options = {
@@ -260,6 +316,10 @@ class DrugTable extends React.Component{
 
                         <TableHeaderColumn dataField='drugName' tdStyle={ { whiteSpace: 'normal' } }>
                             Name
+                        </TableHeaderColumn>
+                        
+                        <TableHeaderColumn hiddenOnInsert dataField='type' tdStyle={ { whiteSpace: 'normal' } }>
+                            Type
                         </TableHeaderColumn>
 
                         <TableHeaderColumn dataField='price' tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >
@@ -296,6 +356,32 @@ class DrugTable extends React.Component{
 
                             <ButtonDiv>
                                 <Button variant="primary" onClick = {this.submitAdd} >Add</Button>
+                            </ButtonDiv>
+                        </Form>
+
+                    </Modal.Body>
+                </Modal>
+
+                <Modal show = {this.state.dropdownModal} onHide = {this.closeDropdownModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Select type of drug</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+
+                        <Form>
+                            <Form.Group >
+                                <Form.Control as="select" onChange = {this.dropListener}>
+                                    <option>Chewable</option>
+                                    <option>Pill</option>
+                                    <option>Ointment</option>
+                                    <option>Syrup</option>
+                                    <option>Spray</option>
+                                </Form.Control>
+                            </Form.Group>
+
+                            <ButtonDiv>
+                                <Button variant="primary" onClick = {this.submitDropdownAdd} >Confirm</Button>
                             </ButtonDiv>
                         </Form>
 
