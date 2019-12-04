@@ -145,7 +145,7 @@ class PharmacistOrderTable extends React.Component{
                             Order#
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='clientAHN' tdStyle={ { whiteSpace: 'normal' } }>
+                        <TableHeaderColumn dataField='clientUsername' tdStyle={ { whiteSpace: 'normal' } }>
                             Client
                         </TableHeaderColumn>
 
