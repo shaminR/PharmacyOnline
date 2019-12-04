@@ -47,7 +47,6 @@ router.put('/api/change',async(req: any, res: any) =>{
         res.sendStatus(500);
     }
 })
-
 router.get('/api/driverDrugs',async(req: any, res: any) =>{
     console.log("in routes");
     try{
@@ -78,7 +77,6 @@ router.put('/api/getAllClientOrders', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
-
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
         const statusToFetch: Number = 1;
@@ -114,14 +112,33 @@ router.put('/api/healthrecords', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/reduceDrugStock', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        let reduceBy = +req.body.amount;
+
+        let result = await Database.Drugs.getStock(drugid);
+        let currStock = result[0].stock;
+        let newStock = currStock - reduceBy;
+
+        result = await Database.Drugs.setStock({id: drugid, stock: newStock});
+
+        console.log(JSON.stringify(currStock) + " new: " + newStock);
+        
+        res.json(result);
+        
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/getDrugStock', async(req: any, res: any) => {
     try {
 
         let id = req.body.id;
-        console.log(" yuhh " + id);
 
         let result = await Database.Drugs.getStock(id);
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
         res.json(result);
 
     } catch (error) {

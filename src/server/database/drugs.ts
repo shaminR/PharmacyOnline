@@ -13,7 +13,6 @@ export const listAllDrugs = async () => {
     });
 }
 
-
 export const deleteDrug = async (req: any) => {
 
     const id = req.drugid;
@@ -46,7 +45,6 @@ export const getStock = async (req: any) => {
                 return reject(err);
             }
             else{
-                // console.log(JSON.parse(JSON.stringify(result)));
                 resolve(result);
             }
         });
@@ -76,9 +74,28 @@ export const addDrug = async (req: any) => {
     });
 }
 
+export const setStock = async(req: any)=>{
+    const id = req.id;
+    const stock = req.stock;
+
+    const query ='UPDATE drugs SET stock = ? WHERE drugid = ?';
+    const args = [stock, id];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+
 export default {
     listAllDrugs,
     deleteDrug,
     addDrug,
+    setStock,
     getStock
 }

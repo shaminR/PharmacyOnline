@@ -47,15 +47,40 @@ class PharmacistOrderTable extends React.Component{
             console.log("too much requested, not enough stock!");
         } else{
             console.log("there is enough!");
-        }
-        // this.changeOrderStatus(+this.state.selected.orderid);
+            
+            this.reduceStockBy(+this.state.selected.drugid, +this.state.selected.amount);
+            this.changeOrderStatus(+this.state.selected.orderid);
 
-        // for (var i = this.state.orders.length - 1; i >= 0; --i) {
-        //     if (this.state.orders[i].orderid == this.state.selected.orderid) {
-        //         this.state.orders.splice(i,1);
-        //     }
-        // }
+            for (var i = this.state.orders.length - 1; i >= 0; --i) {                   // to delete order from table
+                if (this.state.orders[i].orderid == this.state.selected.orderid) {
+                    this.state.orders.splice(i,1);
+                }
+            }
+        }
         this.forceUpdate();
+    }
+
+    async reduceStockBy(drugid: Number, amountToReduce: Number){
+        try {
+            let r = await fetch('/api/reduceDrugStock', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id': drugid, 'amount': amountToReduce})
+            });
+            let result = await r.json();
+
+            if(result == 'success'){
+                console.log("successfully changed stock of drug: " + drugid + " by " + amountToReduce);
+            }else{
+                console.log("error in reducing stock");
+            }
+        
+        } catch (error) {
+            console.log(error);
+            console.log("error in reduce drug stock");
+        }
     }
 
     async componentDidMount() {
@@ -111,7 +136,7 @@ class PharmacistOrderTable extends React.Component{
         }
     }
 
-    createCustomInsertButton = (onClick) => {
+    createCustomInsertButton = (onClick: any) => {
         return (
             <DeleteButton
                 btnText='Accept Order'
