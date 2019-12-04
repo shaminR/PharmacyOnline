@@ -18,7 +18,7 @@ const WelcomeMsg = styled.h1`
     margin-bottom: 20px;
 `
 const ButtonDiv:any = styled.div`     
-     display: flex;
+    display: flex;
     justify-content: center;
     align-content: center;
     // background-color: red;
@@ -29,6 +29,22 @@ const ButtonDiv:any = styled.div`
 class ClientPage extends React.Component {
     state = {
         display: 'previousOrders',
+    }
+
+    action = () => {
+        // if(this.state.username === '' || this.state.password === ''){
+        //     alert("Please enter valid credentials");
+        //     return;
+        // } 
+        // if(this.state.type === '' || this.state.type == "Select"){
+        //     alert("please select a user type");
+        //     return;
+        // }
+        // else{
+        //     console.log(this.state.type);
+        //     this.verify();
+        // }
+        //ClientDrugTable.addOrder();
     }
 
     toolBarButtons = (e: any) => {
@@ -42,6 +58,7 @@ class ClientPage extends React.Component {
             return(
                 <>
                 <SubHead>Recent Orders: </SubHead> 
+                
                 <ClientOrdertable>   
                 </ClientOrdertable>
                 </>
@@ -50,6 +67,7 @@ class ClientPage extends React.Component {
             return (
                 <>
                 <SubHead>All Drugs: </SubHead>
+                    {/* <Button variant="primary" onClick = {this.action} >Order</Button> */}
                     <ClientDrugTable>
                     </ClientDrugTable>
                 </>
@@ -63,8 +81,8 @@ class ClientPage extends React.Component {
                 Welcome {ActiveLogin.state.username},
             </WelcomeMsg>
             <ButtonDiv>
-            <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "allDrugs">Place Order</Button>
-            <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "previousOrders">View Previous Orders</Button>
+                <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "allDrugs">Place Order</Button>
+                <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "previousOrders">View Previous Orders</Button>
             </ButtonDiv>
            
             <Container>

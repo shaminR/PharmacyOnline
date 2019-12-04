@@ -12,6 +12,20 @@ export const listAllOrders = async () => {
         });
     });
 }
+
+export const getMaxId = async () => {
+    console.log("yassss betch \n");
+    return new Promise((resolve, reject) => {
+        Connection.query('SELECT MAX(`orderid`) as "orderid" FROM orders', (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
 export const findClientOrders = async (req: any) => {
 
     const username = req.clientUsername;
@@ -69,9 +83,38 @@ export const changeStatus = async (req: any) => {
     });
 }
 
+export const addOrder = async (req: any) => {
+    console.log("in addORDER order.ts");
+        const orderid = req.orderid;
+        const drugid = req.drugid;
+        const amount = req.amount;
+        const drugname = req.drugname;
+        const status = req.status;
+        const drugprice = req.drugprice;
+        const clientUsername = req.clientUsername;
+
+    const query = 'INSERT INTO `orders` (`orderid`,`drugid`,`amount`, `drugname`, `status`, `drugprice`, `clientUsername`)'+ 
+    'VALUES(?,?,?,?,?,?,?)';
+    const args = [orderid, drugid,amount,drugname,status,drugprice,clientUsername];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
+
+
 export default {
    listAllOrders,
    findClientOrders,
    changeStatus,
-   listStatusOrders
+   listStatusOrders,
+   addOrder,
+   getMaxId
 }
