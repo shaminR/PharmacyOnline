@@ -13,6 +13,41 @@ export const listAllOrders = async () => {
     });
 }
 
+export const driverDrugs = async()=>{
+    console.log('in orders');
+    const query = 'SELECT * from orders WHERE status = ?';
+    const args = [2];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve(result);
+            }
+        });
+    });
+
+}
+
+export const changeState = async(req: any)=>{
+    const id = req.id;
+
+    const query ='UPDATE orders SET status = ? WHERE drugid = ?';
+    const args = [0,id];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+
+
 export const getMaxId = async () => {
     console.log("yassss betch \n");
     return new Promise((resolve, reject) => {
@@ -115,6 +150,8 @@ export default {
    findClientOrders,
    changeStatus,
    listStatusOrders,
+   driverDrugs,
+   changeState,
    addOrder,
-   getMaxId
+   getMaxId,
 }

@@ -53,7 +53,7 @@ const GridContainer = styled.div`
     width: 117%;
     height: 90%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 3fr;
 `
 const MyButtonToolbar = styled.div`
     display: flex;

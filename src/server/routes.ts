@@ -36,6 +36,28 @@ router.get('/api/drugs', async(req: any, res: any) => {
     }
 });
 
+router.put('/api/change',async(req: any, res: any) =>{
+    let ids = req.body.selected;
+    try{
+        let drugs = await Database.Orders.changeState({id: ids});
+        // console.log(drugs);
+        res.json(drugs);
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
+router.get('/api/driverDrugs',async(req: any, res: any) =>{
+    console.log("in routes");
+    try{
+        let drugs = await Database.Orders.driverDrugs();
+        // console.log(drugs);
+        res.json(drugs);
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
 router.put('/api/getAllClientOrders', async(req: any, res: any) => {
     try {
         console.log(req + "\\\\\\\\\\\\\\\\\\ \n");
@@ -55,7 +77,6 @@ router.put('/api/getAllClientOrders', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
-
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
         const statusToFetch: Number = 1;
@@ -70,6 +91,7 @@ router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
 router.get('/api/getAllClients', async(req: any, res: any) => {
     try {
         let orders = await Database.Client.listAllClients();
+        // let orders = await Database.Orders.listAllOrders();
         res.json(orders);
     } catch (error) {
         console.log(error);
@@ -90,14 +112,53 @@ router.put('/api/healthrecords', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/reduceDrugStock', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        let reduceBy = +req.body.amount;
+
+        let result = await Database.Drugs.getStock(drugid);
+        let currStock = result[0].stock;
+        let newStock = currStock - reduceBy;
+
+        result = await Database.Drugs.setStock({id: drugid, stock: newStock});
+
+        console.log(JSON.stringify(currStock) + " new: " + newStock);
+        
+        res.json(result);
+        
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/addDrugStock', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        let addAmount = +req.body.amount;
+
+        let result = await Database.Drugs.getStock(drugid);
+        let currStock = result[0].stock;
+        let newStock = currStock + addAmount;
+
+        result = await Database.Drugs.setStock({id: drugid, stock: newStock});
+
+        console.log(JSON.stringify(currStock) + " new: " + newStock);
+        
+        res.json(result);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/getDrugStock', async(req: any, res: any) => {
     try {
 
         let id = req.body.id;
-        console.log(" yuhh " + id);
 
         let result = await Database.Drugs.getStock(id);
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
         res.json(result);
 
     } catch (error) {
@@ -154,8 +215,10 @@ router.put('/api/users', async(req: any, res: any) => {
 
         if(req.body.type == 'Pharmacist'){
             type = 'pharma';
-        } else{
+        } else if(req.body.type == 'Client'){
             type = 'client';
+        } else if(req.body.type == 'Driver'){
+            type = 'driver';
         }
         let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
         console.log(JSON.stringify(user));
