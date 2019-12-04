@@ -6,6 +6,7 @@ import Login from './Login';
 import SignUp from './signup'
 import ClientPage from './ClientPage';
 import Pharmacist from './Pharmacist';
+import Driver from './Driver';
 import { Router, Switch, Route } from 'react-router-dom';
 
 const Main = () => (
@@ -17,6 +18,7 @@ const Main = () => (
         <Route exact path = "/signup" component = {SignUp}/>
         <Route exact path = "/userpage" component = {ClientPage}/>
         <Route exact path = "/pharmacist" component = {Pharmacist}/>
+        <Route exact path = "/driver" component = {Driver}/>
     </Switch>
 )
 

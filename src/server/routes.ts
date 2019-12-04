@@ -24,6 +24,33 @@ router.get('/api/drugs', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+
+router.put('/api/change',async(req: any, res: any) =>{
+    let ids = req.body.selected;
+    try{
+        let drugs = await Database.Orders.changeState({id: ids});
+        console.log(drugs);
+        res.json(drugs);
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
+
+router.get('/api/driverDrugs',async(req: any, res: any) =>{
+    console.log("in routes");
+    try{
+        let drugs = await Database.Orders.driverDrugs();
+        console.log(drugs);
+        res.json(drugs);
+    }catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
+
+
+
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
      //   console.log(" made it here");

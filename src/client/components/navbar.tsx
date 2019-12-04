@@ -50,7 +50,7 @@ class CustomNavbar extends React.Component{
                     </Nav.Link>
                 </Nav>
                 <Nav.Link>
-                        <SignUp to="./signup">Sign Up</SignUp>
+                        <SignUp to="./driver">drive</SignUp>
                 </Nav.Link>
             </Navbar>
         </>

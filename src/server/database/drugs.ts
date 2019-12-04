@@ -12,6 +12,8 @@ export const listAllDrugs = async () => {
         });
     });
 }
+
+
 export const deleteDrug = async (req: any) => {
 
     const id = req.drugid;
