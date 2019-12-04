@@ -29,7 +29,7 @@ router.put('/api/change',async(req: any, res: any) =>{
     let ids = req.body.selected;
     try{
         let drugs = await Database.Orders.changeState({id: ids});
-        console.log(drugs);
+        // console.log(drugs);
         res.json(drugs);
     }catch(error){
         console.log(error);
@@ -41,7 +41,7 @@ router.get('/api/driverDrugs',async(req: any, res: any) =>{
     console.log("in routes");
     try{
         let drugs = await Database.Orders.driverDrugs();
-        console.log(drugs);
+        // console.log(drugs);
         res.json(drugs);
     }catch(error){
         console.log(error);
@@ -49,11 +49,8 @@ router.get('/api/driverDrugs',async(req: any, res: any) =>{
     }
 })
 
-
-
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
-     //   console.log(" made it here");
         let orders = await Database.Orders.listAllOrders();
         res.json(orders);
     } catch (error) {
@@ -110,8 +107,10 @@ router.put('/api/users', async(req: any, res: any) => {
 
         if(req.body.type == 'Pharmacist'){
             type = 'pharma';
-        } else{
+        } else if(req.body.type == 'Client'){
             type = 'client';
+        } else if(req.body.type == 'Driver'){
+            type = 'driver';
         }
         let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
         console.log(JSON.stringify(user));

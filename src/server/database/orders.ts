@@ -30,7 +30,6 @@ export const driverDrugs = async()=>{
 
 }
 
-
 export const changeState = async(req: any)=>{
     const id = req.id;
 
