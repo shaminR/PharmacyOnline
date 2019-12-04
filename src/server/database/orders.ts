@@ -14,9 +14,9 @@ export const listAllOrders = async () => {
 }
 export const findClientOrders = async (req: any) => {
 
-    const username = req.username;
- 
-    const query = 'SELECT * from orders WHERE clientAHN = ?';
+    const username = req.clientUsername;
+    console.log(username + " in orders.ts \n");
+    const query = 'SELECT * from orders WHERE clientUsername = ?';
     const args = [username];
 
     return new Promise((resolve, reject) => {

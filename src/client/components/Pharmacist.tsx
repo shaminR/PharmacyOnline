@@ -104,7 +104,7 @@ class Pharmacist extends React.Component{
             <>
             <GridContainer>
                 <FirstCol>
-                    <NameTitle> Welcome, {ActiveLogin.state.username} </NameTitle>
+                    <NameTitle> Welcome {ActiveLogin.state.username}, </NameTitle>
 
                     <MyButtonToolbar>
                         <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "allDrugs">View Drugs</Button>

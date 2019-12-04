@@ -1,18 +1,40 @@
 import * as React from 'react';
 import { Component } from 'react';
+<<<<<<< Updated upstream
 import './react-bootstrap-table-all.min.css';
+=======
+import ActiveLogin from '../ActiveLogin';
+import 'react-bootstrap-table/css/react-bootstrap-table.css';
+>>>>>>> Stashed changes
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class ClientOrderTable extends React.Component{
-    state = { 
-        data : [
-            {DrugName: 'ASSprin', Quantity: '17', Price: '$109'},
-            {DrugName: 'Mike Hawk', Quantity: '20', Price: '$185'},
-            {DrugName: 'Gabe Itches', Quantity: '12', Price: '$89'}
-          ]
-     }
+    state = {
+        orders:[]
+    }
+
+    async componentDidMount() {
+	// 	try {
+	// 		let r = await fetch('/api/orders');
+	// 		let orders = await r.json();
+	// 		this.setState({ orders });
+	// 	} catch (error) {
+	// 		console.log(error);
+    //     }
+    // }   
+            let r = await fetch('/api/getAllClientOrders',{          //JSON.stringify({username: 'rahman', password: '8002'})
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+            },
+                body: JSON.stringify(ActiveLogin.state)
+            });
+                let orders = await r.json();
+                this.setState({ orders });
+            }
+        
     render() { 
-        return (  <BootstrapTable data={this.state.data} 
+        return (  <BootstrapTable data={this.state.orders} 
             striped
             hover
             condensed
@@ -21,15 +43,15 @@ class ClientOrderTable extends React.Component{
             // deleteRow
             search
  >
-            <TableHeaderColumn isKey dataField='DrugName'
+            <TableHeaderColumn isKey dataField='drugName'
             >
             Drug Name
             </TableHeaderColumn>
-            <TableHeaderColumn dataField='Quantity'
+            <TableHeaderColumn dataField='quantity'
             >
             Quantity
             </TableHeaderColumn>
-            <TableHeaderColumn dataField='Price'
+            <TableHeaderColumn dataField='drugPrice'
             >
             Price
             </TableHeaderColumn>
