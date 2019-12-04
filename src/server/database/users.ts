@@ -20,6 +20,24 @@ export const validate = async (req: any) => {
         });
     });
 }
+export const CheckIfExists = async (req: any) => {
+
+    const username = req.username;
+
+    const query = 'SELECT * from users WHERE BINARY username = ?';
+    const args = [username];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
 
 export const addUser = async (req: any) => {
 
@@ -42,5 +60,5 @@ export const addUser = async (req: any) => {
 }
 
 export default {
-    validate, addUser
+    validate, addUser, CheckIfExists, 
 }
