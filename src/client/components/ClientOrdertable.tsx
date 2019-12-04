@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
-<<<<<<< Updated upstream
-import './react-bootstrap-table-all.min.css';
-=======
 import ActiveLogin from '../ActiveLogin';
 import 'react-bootstrap-table/css/react-bootstrap-table.css';
->>>>>>> Stashed changes
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class ClientOrderTable extends React.Component{
@@ -43,15 +39,15 @@ class ClientOrderTable extends React.Component{
             // deleteRow
             search
  >
-            <TableHeaderColumn isKey dataField='drugName'
+            <TableHeaderColumn isKey dataField='drugname'
             >
             Drug Name
             </TableHeaderColumn>
-            <TableHeaderColumn dataField='quantity'
+            <TableHeaderColumn dataField='amount'
             >
             Quantity
             </TableHeaderColumn>
-            <TableHeaderColumn dataField='drugPrice'
+            <TableHeaderColumn dataField='drugprice'
             >
             Price
             </TableHeaderColumn>
