@@ -10,24 +10,16 @@ class ClientOrderTable extends React.Component{
     }
 
     async componentDidMount() {
-	// 	try {
-	// 		let r = await fetch('/api/orders');
-	// 		let orders = await r.json();
-	// 		this.setState({ orders });
-	// 	} catch (error) {
-	// 		console.log(error);
-    //     }
-    // }   
-            let r = await fetch('/api/getAllClientOrders',{          //JSON.stringify({username: 'rahman', password: '8002'})
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
+        let r = await fetch('/api/getAllClientOrders',{          //JSON.stringify({username: 'rahman', password: '8002'})
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
             },
-                body: JSON.stringify(ActiveLogin.state)
-            });
-                let orders = await r.json();
-                this.setState({ orders });
-            }
+            body: JSON.stringify(ActiveLogin.state)
+        });
+        let orders = await r.json();
+        this.setState({ orders });
+    }
         
     render() { 
         return (  <BootstrapTable data={this.state.orders} 

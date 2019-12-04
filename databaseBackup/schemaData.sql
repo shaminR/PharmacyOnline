@@ -43,7 +43,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (78877,'12/12/1999','melvin','c','wang','7777','melbin'),(444333,'9/30/2001','nav','j','brarjot','809080','nav'),(30032005,'2/18/2005','anvet','k','gill','909090','abnoot');
+INSERT INTO `client` VALUES (444333,'9/30/2001','nav','j','brarjot','809080','nav'),(30032005,'2/18/2005','anvet','k','gill','909090','abnoot');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `drugs` (
 
 LOCK TABLES `drugs` WRITE;
 /*!40000 ALTER TABLE `drugs` DISABLE KEYS */;
-INSERT INTO `drugs` VALUES (1,'Aspirin',12.99,2020,8,10),(2,'Tylenol',11,2021,2,9),(88,'crack cocaine',88.99,9020,9,80);
+INSERT INTO `drugs` VALUES (1,'Aspirin',12.99,2020,8,22),(2,'Tylenol',11,2021,2,21),(88,'crack cocaine',88.99,9020,9,100);
 /*!40000 ALTER TABLE `drugs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,88,10,'crack cocaine',1,88.99,'abnoot');
+INSERT INTO `orders` VALUES (1,88,500,'crack cocaine',2,88.99,'abnoot'),(2,1,200,'Tylenol',2,11,'nav');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +129,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('abnoot','1111','client'),('Rahman','8002','pharma');
+INSERT INTO `users` VALUES ('abnoot','1111','client'),('kelvin','9000','driver'),('nav','1111','client'),('Rahman','8002','pharma');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -142,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-03 17:03:47
+-- Dump completed on 2019-12-03 21:55:23
