@@ -228,6 +228,18 @@ router.put('/api/users', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/userCheckExists', async(req: any, res: any) => {
+    try {
+        let usernames = req.body.username;
+
+        let user = await Database.Users.CheckIfExists({username: usernames});
+        console.log(JSON.stringify(user));
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
 router.put('/api/signup', async(req,res)=>{
     // console.log("in signup");
