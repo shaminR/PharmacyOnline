@@ -11,7 +11,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 
 const Main = () => (
     <Switch>
-        <Route exact path = "/" component = {Pharmacist} />
+        <Route exact path = "/" component = {LandingPage} />
         <Route exact path = "/about" component = {About} />
         <Route exact path = "/drugs" component = {Druglist}/>
         <Route exact path = "/login" component = {Login}/>   

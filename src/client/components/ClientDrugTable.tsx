@@ -31,7 +31,9 @@ class ClientDrugTable extends React.Component{
         // type: '',
         amountToAdd: '',
         modalVisibility: false,
+        prescribedId:[],
         drugs:[],
+        clientDrugIds: [],
         selected: {
          orderid: '',
          amount: '',
@@ -133,22 +135,59 @@ class ClientDrugTable extends React.Component{
     }
 
     async componentDidMount() {
+        this.getDrugs();
+        console.log(this.state.prescribedId + "yuh hehe hiZZZZZZZZZZ");
 		try {
 			let r = await fetch('/api/drugs');
-			let drugs = await r.json();
-			this.setState({ drugs });
+            let drugs = await r.json();
+            for(var i = 0; i <drugs.length; i++){
+              for(var a = 0; a < this.state.prescribedId.length; a++){
+                  if(drugs[i].drugid == this.state.prescribedId[a].drugid){
+                      console.log(drugs[i].drugid);
+                      this.setState({ 
+                        drugs: this.state.drugs.concat([drugs[i]])
+                      })
+                  }
+              }
+            }
+            console.log(this.state.drugs);
+            //this.setState({ drugs });
+            
 		} catch (error) {
 			console.log(error);
 		}
     }
+
+    async getDrugs() {
+        
+        let r = await fetch('/api/getClientdrugIds',{          //JSON.stringify({username: 'rahman', password: '8002'})
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ActiveLogin.state)
+        });
+        try{
+            console.log("yuhhhhh in get drug \n")
+        let prescribedId = await r.json();
+       
+        this.setState({prescribedId});
+        console.log(JSON.stringify(this.state.prescribedId[0].drugid) + " yaheo");
+        }catch (error){
+            console.log(error);
+        }
+    }
+    
   
     render(){
-    
+        
         const selectRowProp = {
             mode: 'radio',
             onSelect: this.onSelectRow
         }
-
+        const options = {
+            noDataText: 'Loading'
+        }
         return(
 
             <div style = {{paddingTop: '10px'}}>
@@ -156,7 +195,7 @@ class ClientDrugTable extends React.Component{
                 <TableDiv>
                     {/* 
                     // @ts-ignore */}    
-                    <BootstrapTable data={this.state.drugs} striped hover condensed pagination selectRow={selectRowProp} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
+                    <BootstrapTable data={this.state.drugs} striped hover condensed pagination selectRow={selectRowProp} options = {options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
                         <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                             DrugID
