@@ -32,6 +32,7 @@ CREATE TABLE `client` (
   `lname` varchar(45) NOT NULL,
   `ICName` varchar(45) NOT NULL,
   `clientuser` varchar(45) NOT NULL,
+  `address` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`AHN`),
   KEY `fk_username_idx` (`clientuser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -43,7 +44,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (88888,'9/9/2010','yuh','p','pendi','99999','yuhh'),(444333,'9/30/2001','nav','j','brarjot','809080','nav'),(30032005,'2/18/2005','anvet','k','gill','909090','abnoot');
+INSERT INTO `client` VALUES (88888,'9/9/2010','yuh','p','pendi','99999','yuhh','123 st'),(444333,'9/30/2001','nav','j','brarjot','809080','nav','5453 ave'),(30032005,'2/18/2005','anvet','k','gill','909090','abnoot','32 dr');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +73,7 @@ CREATE TABLE `drugs` (
 
 LOCK TABLES `drugs` WRITE;
 /*!40000 ALTER TABLE `drugs` DISABLE KEYS */;
-INSERT INTO `drugs` VALUES (1,'Aspirin',12.99,2020,8,22,'Pill'),(2,'Tylenol',11,2021,2,1021,'Syrup'),(88,'crack cocaine',88.99,9020,9,100,'Chewable'),(999,'jjs ass',12.2,1010,9,299,'Spray'),(9090,'jaya drug',88.22,9090,9,109,'Ointment');
+INSERT INTO `drugs` VALUES (1,'Aspirin',12.99,2020,8,22,'Pill'),(2,'Tylenol',11,2021,2,1021,'Syrup'),(88,'crack cocaine',88.99,9020,9,47867,'Chewable'),(999,'jjs ass',12.2,1010,9,299,'Spray'),(9090,'jaya drug',88.22,9090,9,109,'Ointment');
 /*!40000 ALTER TABLE `drugs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,7 +106,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,88,1000,'crack cocaine',0,88.99,'abnoot'),(2,1,200,'Tylenol',2,11,'nav'),(3,999,100,'jjs ass',1,12.2,'abnoot'),(4,9090,800,'jaya drug',0,88.22,'abnoot');
+INSERT INTO `orders` VALUES (1,88,1000,'crack cocaine',0,88.99,'abnoot'),(2,1,200,'Tylenol',0,11,'nav'),(3,999,100,'jjs ass',1,12.2,'abnoot'),(4,9090,800,'jaya drug',0,88.22,'abnoot'),(5,88,2233,'crack cocaine',0,88.99,'abnoot');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-05 14:57:26
+-- Dump completed on 2019-12-05 17:58:22

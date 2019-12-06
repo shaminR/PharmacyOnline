@@ -35,6 +35,15 @@ class PharmacistPrescribesTable extends React.Component{
     }
 
     render(){
+        const options = {
+            // deleteBtn: this.createCustomInsertButton,
+            noDataText: 'No Clients registered',
+        }
+        const selectRowProp = {
+            mode: 'radio',
+            // onSelect: this.onSelectRow,
+            bgColor: 'gold',
+        }
         return(
             <>
                 <h1>in prescriptions for {ActiveLogin.state.selectedClient} </h1>
