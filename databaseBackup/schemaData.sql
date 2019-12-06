@@ -44,8 +44,32 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (88888,'9/9/2010','yuh','p','pendi','99999','yuhh','123 st'),(444333,'9/30/2001','nav','j','brarjot','809080','nav','5453 ave'),(30032005,'2/18/2005','anvet','k','gill','909090','abnoot','32 dr');
+INSERT INTO `client` VALUES (12212,'2/2/2006','curtis','g','wagen','ensure me','curt','8908tg jhx'),(88888,'9/9/2010','yuh','p','pendi','99999','yuhh','123 st'),(444333,'9/30/2001','nav','j','brarjot','809080','nav','5453 ave'),(30032005,'2/18/2005','anvet','k','gill','NULL','abnoot','32 dr');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `company`
+--
+
+DROP TABLE IF EXISTS `company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `company` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `company`
+--
+
+LOCK TABLES `company` WRITE;
+/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (111,'sun life'),(112,'ensure me'),(113,'desi'),(114,'pray');
+/*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -73,8 +97,35 @@ CREATE TABLE `drugs` (
 
 LOCK TABLES `drugs` WRITE;
 /*!40000 ALTER TABLE `drugs` DISABLE KEYS */;
-INSERT INTO `drugs` VALUES (1,'Aspirin',12.99,2020,8,22,'Pill'),(2,'Tylenol',11,2021,2,1021,'Syrup'),(88,'crack cocaine',88.99,9020,9,47867,'Chewable'),(999,'jjs ass',12.2,1010,9,299,'Spray'),(9090,'jaya drug',88.22,9090,9,109,'Ointment');
+INSERT INTO `drugs` VALUES (1,'Aspirin',12.99,2020,8,22,'Pill'),(2,'Tylenol',11,2021,2,1021,'Syrup'),(88,'crack cocaine',88.99,9020,9,47201,'Chewable'),(999,'jjs ass',12.2,1010,9,299,'Spray'),(9090,'jaya drug',88.22,9090,9,109,'Ointment');
 /*!40000 ALTER TABLE `drugs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `healthrecords`
+--
+
+DROP TABLE IF EXISTS `healthrecords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `healthrecords` (
+  `healthid` int(11) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `allergy` varchar(45) NOT NULL,
+  `condition` varchar(45) NOT NULL,
+  `age` int(11) NOT NULL,
+  PRIMARY KEY (`healthid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `healthrecords`
+--
+
+LOCK TABLES `healthrecords` WRITE;
+/*!40000 ALTER TABLE `healthrecords` DISABLE KEYS */;
+INSERT INTO `healthrecords` VALUES (1,'abnoot','men','overweight',33);
+/*!40000 ALTER TABLE `healthrecords` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -106,7 +157,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,88,1000,'crack cocaine',0,88.99,'abnoot'),(2,1,200,'Tylenol',0,11,'nav'),(3,999,100,'jjs ass',1,12.2,'abnoot'),(4,9090,800,'jaya drug',0,88.22,'abnoot'),(5,88,2233,'crack cocaine',0,88.99,'abnoot');
+INSERT INTO `orders` VALUES (1,88,1000,'crack cocaine',0,88.99,'abnoot'),(2,1,200,'Tylenol',0,11,'nav'),(3,999,100,'jjs ass',1,12.2,'abnoot'),(4,9090,800,'jaya drug',0,88.22,'abnoot'),(5,88,2233,'crack cocaine',0,88.99,'abnoot'),(6,2,100,'Tylenol',1,11,'abnoot'),(7,1,23432,'Aspirin',1,12.99,'abnoot'),(8,88,666,'crack cocaine',0,88.99,'abnoot'),(9,88,666,'crack cocaine',0,88.99,'curt');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +186,7 @@ CREATE TABLE `prescriptions` (
 
 LOCK TABLES `prescriptions` WRITE;
 /*!40000 ALTER TABLE `prescriptions` DISABLE KEYS */;
-INSERT INTO `prescriptions` VALUES (1,'abnoot',88);
+INSERT INTO `prescriptions` VALUES (2,'abnoot',1),(3,'abnoot',88),(6,'abnoot',2),(7,'curt',88);
 /*!40000 ALTER TABLE `prescriptions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +211,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('abnoot','1111','client'),('kelvin','9000','driver'),('nav','1111','client'),('Rahman','8002','pharma'),('yuhh','0000','client');
+INSERT INTO `users` VALUES ('abnoot','1111','client'),('curt','1','client'),('kelvin','9000','driver'),('nav','1111','client'),('Rahman','8002','pharma'),('yuhh','0000','client');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -173,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-05 17:58:22
+-- Dump completed on 2019-12-06  0:56:28
