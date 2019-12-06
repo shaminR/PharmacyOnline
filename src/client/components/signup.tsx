@@ -60,7 +60,7 @@ class SignUp extends React.Component {
 		username:'',
 		AHN: '',
 		ICName: '',
-
+		docId: '',
 		usernameValid: false,
 	}
 	
@@ -116,12 +116,14 @@ class SignUp extends React.Component {
 	}
 
 	async submit () {
+		console.log(this.state.docId);
 		try{
 			let r = await fetch ('/api/signup',{
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'
 				},
+				
 				body: JSON.stringify(this.state)
 			});
 			console.log("user added");
@@ -190,6 +192,11 @@ class SignUp extends React.Component {
 							<Form.Group as ={Col} md = "6">
 								<Form.Label>Insurance number</Form.Label>
 								<Form.Control placeholder = "Insurance number" id= "ICName" onChange = {this.handleChange}/>
+							</Form.Group>
+
+							<Form.Group as ={Col} md = "4">
+								<Form.Label>Doctor Id Number</Form.Label>
+								<Form.Control placeholder = "Doctor id number" id= "docId" onChange = {this.handleChange}/>
 							</Form.Group>
 					</Form.Row>
 

@@ -73,7 +73,6 @@ router.get('/api/driverDrugs',async(req: any, res: any) =>{
 })
 router.put('/api/getAllClientOrders', async(req: any, res: any) => {
     try {
-        console.log(req + "\\\\\\\\\\\\\\\\\\ \n");
         let usernames =  req.body.username;
      
         let passwords = req.body.password;
@@ -266,9 +265,10 @@ router.put('/api/signup', async(req,res)=>{
         const lname = req.body.lname;
         const ICName = req.body.ICName; 
         const birthdate= (req.body.month) +"/"+(req.body.day)+"/"+(req.body.year);
+        const docId = req.body.docId;
          
         let user = await Database.Users.addUser({passwords: password, usernames: username});
-        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username});
+        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username, docId: docId});
     }catch(error){
         console.log(error);
     }
