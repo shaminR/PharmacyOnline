@@ -15,7 +15,7 @@ export const listAllOrders = async () => {
 
 export const driverDrugs = async()=>{
     console.log('in orders');
-    const query = 'SELECT * from orders WHERE status = ?';
+    const query = 'SELECT address, drugid, drugname FROM orders,client WHERE status = ? AND AHN = clientAHN';
     const args = [2];
     return new Promise((resolve, reject) => {
         Connection.query(query, args, (err, result) => {

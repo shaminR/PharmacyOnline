@@ -60,6 +60,7 @@ class SignUp extends React.Component {
 		username:'',
 		AHN: '',
 		ICName: '',
+		address: '',
 	}
 	
 	action = () => {
@@ -137,20 +138,24 @@ class SignUp extends React.Component {
 					</Form.Row>
 
 					<Form.Row>
-						<Form.Group as ={Col} md = "6">
+						<Form.Group as ={Col} md = "4">
 								<Form.Label>AHN</Form.Label>
 								<Form.Control placeholder = "AHN" id= "AHN" onChange = {this.handleChange}/>
 							</Form.Group>
 
-							<Form.Group as ={Col} md = "6">
+							<Form.Group as ={Col} md = "4">
 								<Form.Label>Insurance number</Form.Label>
 								<Form.Control placeholder = "Insurance number" id= "ICName" onChange = {this.handleChange}/>
+							</Form.Group>
+							<Form.Group as ={Col} md = "4">
+								<Form.Label>Home Address</Form.Label>
+								<Form.Control placeholder = "Address" id= "address" onChange = {this.handleChange}/>
 							</Form.Group>
 					</Form.Row>
 
 
 					<Form.Row>
-							<Form.Group as = {Col} md ="4"  id ="password">
+							<Form.Group as = {Col} md ="4" id ="password">
 								<Form.Label>Username</Form.Label>
 								<Form.Control  placeholder="Password" id ="username" onChange = {this.handleChange} />
 							</Form.Group>

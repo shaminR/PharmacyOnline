@@ -131,11 +131,12 @@ router.put('/api/signup', async(req,res)=>{
         const AHN = req.body.AHN;
         const minit = req.body.minit;
         const lname = req.body.lname;
-        const ICName = req.body.ICName; 
+        const ICName = req.body.ICName;
         const birthdate= (req.body.month) +"/"+(req.body.day)+"/"+(req.body.year);
+        const address = (req.body.address);
          
         let user = await Database.Users.addUser({passwords: password, usernames: username});
-        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username});
+        let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username,addresss:address});
     }catch(error){
         console.log(error);
     }
