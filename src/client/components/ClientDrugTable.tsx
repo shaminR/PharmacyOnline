@@ -31,9 +31,11 @@ class ClientDrugTable extends React.Component{
         // type: '',
         amountToAdd: '',
         modalVisibility: false,
+        payVisibility: false,
         prescribedId:[],
         drugs:[],
         clientDrugIds: [],
+        insuranceName: '',
         selected: {
          orderid: '',
          amount: '',
@@ -48,6 +50,10 @@ class ClientDrugTable extends React.Component{
     }
     
     action = () => {
+        if(this.state.selected.drugid == ''){
+            alert("please select a item");
+            return;
+        }
         this.state.modalVisibility = true;
         this.forceUpdate();
         //this.sendOrder();
@@ -87,6 +93,11 @@ class ClientDrugTable extends React.Component{
         this.forceUpdate();
     }
 
+    closeOK = () => {
+        this.state.payVisibility = false;
+        this.forceUpdate();
+    }
+
     handleAddChange = (e: any) => {
         
         this.state.amountToAdd = +e.target.value + "" 
@@ -119,6 +130,9 @@ class ClientDrugTable extends React.Component{
         this.setState({
             modalVisibility: false
         }); 
+        this.setState({
+            payVisibility:true
+        });
     }
    
     onSelectRow = (row: any, isSelected: boolean, e: any) => {
@@ -134,7 +148,18 @@ class ClientDrugTable extends React.Component{
        // ClientDrugTable.state.status = 1;
     }
 
+    finalDisplay(){
+        if(this.state.insuranceName== 'NULL'){
+            return "Your total comes to " + ((+this.state.selected.drugPrice)*(+this.state.selected.amount));
+        }
+        else{
+            return  "Your bill has been sent to " + this.state.insuranceName;
+        }
+    }
+    
+
     async componentDidMount() {
+        console.log("888888888888888888888888888888888 ");
         this.getDrugs();
         console.log(this.state.prescribedId + "yuh hehe hiZZZZZZZZZZ");
 		try {
@@ -152,10 +177,29 @@ class ClientDrugTable extends React.Component{
             }
             console.log(this.state.drugs);
             //this.setState({ drugs });
-            
 		} catch (error) {
 			console.log(error);
-		}
+        }
+
+        console.log("??????????????? ");
+        
+        let r = await fetch('/api/getICName',{          //JSON.stringify({username: 'rahman', password: '8002'})
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ActiveLogin.state.username)
+        });
+        try{
+            console.log("yuhhhhh in get drug \n")
+        let IC = await r.json();
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!! " + IC);
+        console.log(IC[0].ICName);
+       
+        this.setState({insuranceName:IC[0].ICName});
+        }catch (error){
+            console.log(error);
+        }
     }
 
     async getDrugs() {
@@ -177,7 +221,7 @@ class ClientDrugTable extends React.Component{
             console.log(error);
         }
     }
-    
+
   
     render(){
         
@@ -237,6 +281,25 @@ class ClientDrugTable extends React.Component{
                                 <Form.Control type="username" placeholder="Amount" id = "amountAdded" onChange = {this.handleAddChange}/>
                             </Form.Group>
                                 <Button variant="primary" onClick = {this.submitAdd} >Add</Button>
+                           
+                        </Form>
+
+                    </Modal.Body>
+                </Modal>
+
+
+                <Modal show = {this.state.payVisibility} onHide = {this.closeOK}>
+                    <Modal.Header closeButton>
+                        <Modal.Title> Complete!!! order for {this.state.selected.drugname} has been placed </Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+
+                        <Form>
+
+                                <p>{this.finalDisplay()}</p>
+
+                                <Button variant="primary" onClick = {this.closeOK} >Ok</Button>
                            
                         </Form>
 

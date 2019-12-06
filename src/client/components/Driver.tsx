@@ -229,8 +229,8 @@ const CenterBtn = styled.div`
                             Amount to Deliver
                         </TableHeaderColumn>
 
-                        <TableHeaderColumn dataField='clientUsername' tdStyle={ { whiteSpace: 'normal' } }>
-                            Deliver to
+                        <TableHeaderColumn dataField='fname' tdStyle={ { whiteSpace: 'normal' } }>
+                            Client name
                         </TableHeaderColumn>
 
                         <TableHeaderColumn dataField='address' tdStyle={ { whiteSpace: 'normal' } }>
