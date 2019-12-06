@@ -27,6 +27,20 @@ export const enterToDataBase = async (req: any) => {
     });
 }
 
+export const listAllClients = async () => {
+    return new Promise((resolve, reject) => {
+        Connection.query('SELECT * FROM client', (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
+
 export default{
-    enterToDataBase
+    enterToDataBase,
+    listAllClients
 }

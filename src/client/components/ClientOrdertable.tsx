@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import 'react-bootstrap-table/css/react-bootstrap-table.css';
+import './react-bootstrap-table-all.min.css';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class ClientOrderTable extends React.Component{

@@ -93,6 +93,9 @@ class Login extends React.Component{
             } else if(ActiveLogin.state.type[0] == 'Pharmacist'){
                 // @ts-ignore
                 this.props.history.push('./pharmacist');
+            } else if(ActiveLogin.state.type[0] == 'Driver'){
+                // @ts-ignore
+                this.props.history.push('./driver');
             }
 
         } catch (error) {
@@ -115,6 +118,7 @@ class Login extends React.Component{
                                 <option>Select</option>
                                 <option>Pharmacist</option>
                                 <option>Client</option>
+                                <option>Driver</option>
                             </Form.Control>
                         </Form.Group>
                     </DropDownDiv>

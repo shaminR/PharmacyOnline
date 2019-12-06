@@ -32,6 +32,26 @@ export const deleteDrug = async (req: any) => {
         });
     });
 }
+export const getStock = async (req: any) => {
+
+    const id = req;
+
+    const query = 'SELECT * from drugs WHERE drugid = ?';
+    const args = [id];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else{
+                // console.log(JSON.parse(JSON.stringify(result)));
+                resolve(result);
+            }
+        });
+    });
+}
 export const addDrug = async (req: any) => {
 
     const id = req.drugid;
@@ -59,5 +79,6 @@ export const addDrug = async (req: any) => {
 export default {
     listAllDrugs,
     deleteDrug,
-    addDrug
+    addDrug,
+    getStock
 }
