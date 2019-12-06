@@ -53,7 +53,7 @@ export const deleteDrug = async (req: any) => {
 export const deleteSpray = async (req: any) => {
 
     const id = req.drugid;
-    const query = 'DELETE from spray WHERE drugid = ?';
+    const query = 'DELETE from spray WHERE id = ?';
 
     const args = [id];
 
@@ -73,7 +73,7 @@ export const deleteSpray = async (req: any) => {
 export const deleteChewable = async (req: any) => {
 
     const id = req.drugid;
-    const query = 'DELETE from chewable WHERE drugid = ?';
+    const query = 'DELETE from chewable WHERE id = ?';
 
     const args = [id];
 
@@ -93,7 +93,7 @@ export const deleteChewable = async (req: any) => {
 export const deleteSyrup = async (req: any) => {
 
     const id = req.drugid;
-    const query = 'DELETE from syrup WHERE drugid = ?';
+    const query = 'DELETE from syrup WHERE id = ?';
 
     const args = [id];
 
@@ -113,7 +113,7 @@ export const deleteSyrup = async (req: any) => {
 export const deletePill = async (req: any) => {
 
     const id = req.drugid;
-    const query = 'DELETE from pill WHERE drugid = ?';
+    const query = 'DELETE from pill WHERE id = ?';
 
     const args = [id];
 
@@ -133,7 +133,7 @@ export const deletePill = async (req: any) => {
 export const deleteOintment = async (req: any) => {
 
     const id = req.drugid;
-    const query = 'DELETE from ointment WHERE drugid = ?';
+    const query = 'DELETE from ointment WHERE id = ?';
 
     const args = [id];
 
