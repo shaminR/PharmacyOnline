@@ -54,7 +54,12 @@ const CenterBtn = styled.div`
     }
 
     deliverDrug = (rowKeys: any)=>{
+        if(this.state.selected == ''){
+            alert("No item selected");
+            return;
+        }
         this.changeDrugState();
+        this.state.selected == '';
     }    
 
     handleAddRowWithASyncError  = (row: any, colInfo: any, errorCallback: any) => { 
