@@ -10,9 +10,10 @@ export const enterToDataBase = async (req: any) => {
     const ICName = req.ICNames;
     const birthdate = req.birthdates;
     const username = req.usernames;
+    const address = req.addresss;
 
-    const query = 'INSERT INTO `client` (`AHN`,`birthdate`,`fname`,`minit`,`lname`,`ICName`, `clientuser`)'+ 'VALUES(?,?,?,?,?,?,?)';
-    const args = [AHN, birthdate,fname,minit,lname,ICName,username];
+    const query = 'INSERT INTO `client` (`AHN`,`birthdate`,`fname`,`minit`,`lname`,`ICName`, `clientuser`,`address`)'+ 'VALUES(?,?,?,?,?,?,?,?)';
+    const args = [AHN, birthdate,fname,minit,lname,ICName,username,address];
 
     return new Promise((resolve, reject) => {
         Connection.query(query, args, (err, result) => {

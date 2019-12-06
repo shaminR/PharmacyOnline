@@ -159,8 +159,8 @@ const CenterBtn = styled.div`
 		try {
             let r = await fetch('/api/driverDrugs');
             //let r = await fetch('/api/driverDrugs')
-			let drugs = await r.json();
-			this.setState({ drugs });
+			let d = await r.json();
+			this.setState({ drugs:d });
 		} catch (error) {
 			console.log(error);
 		}
@@ -233,6 +233,9 @@ const CenterBtn = styled.div`
                             Deliver to
                         </TableHeaderColumn>
 
+                        <TableHeaderColumn dataField='address' tdStyle={ { whiteSpace: 'normal' } }>
+                            Client Address
+                        </TableHeaderColumn>
                     </BootstrapTable>
                 </TableDiv>
 
