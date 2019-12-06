@@ -54,6 +54,45 @@ router.put('/api/getICName', async(req:any,res:any)=>{
        }
 });
 
+router.put('/api/drugType',async(req:any, res:any)=>{
+
+    const id = req.body.drugid;
+    const description = req.body.description;
+
+    try {
+        console.log(req.body[0]);
+        // console.log(req.body.);
+        console.log("/////////////////////////////////////////////////////////////////////////////////////////////");
+       const name = req.body[0];
+
+        if(req.body.type =='Chewable'){
+            console.log("adding chewable");
+            let ic = await Database.Drugs.addChewable({ids:id, descriptions:description});
+        }
+        else if(req.body.type =='Pill'){
+            console.log("adding pill");
+            let ic = await Database.Drugs.addPill({ids:id, descriptions:description});
+        }
+        else if(req.body.type =='Ointment'){
+            console.log("adding ointment");
+            let ic = await Database.Drugs.addOintment({ids:id, descriptions:description});
+        }
+        else if(req.body.type =='Spray'){
+            console.log("adding spray");
+            let ic = await Database.Drugs.addSpray({ids:id, descriptions:description});
+        }
+        else if(req.body.type =='Syrup'){
+            console.log("adding syrup");
+            let ic = await Database.Drugs.addSyrup({ids:id, descriptions:description});
+        }
+       res.json(500);
+   } catch (error) {
+       console.log(error);
+       res.sendStatus(500);
+   }
+
+});
+
 router.get('/api/drugs', async(req: any, res: any) => {
     try {
      //   console.log(" made it here");
@@ -241,6 +280,79 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+
+router.put('/api/deleteSpray', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
+
+        let deleteResult = await Database.Drugs.deleteSpray({drugid: drugId});
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/deleteOintment', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
+
+        let deleteResult = await Database.Drugs.deleteOintment({drugid: drugId});
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/deletePill', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
+
+        let deleteResult = await Database.Drugs.deletePill({drugid: drugId});
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/deleteChewable', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
+
+        let deleteResult = await Database.Drugs.deleteChewable({drugid: drugId});
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/deleteSyrup', async(req: any, res: any) => {
+    try {
+        let drugId = req.body;
+        console.log(drugId);
+
+        let deleteResult = await Database.Drugs.deleteSyrup({drugid: drugId});
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+
+
 router.put('/api/deletePrescribe', async(req: any, res: any) => {
     try {
         let id = req.body.id;
