@@ -437,13 +437,6 @@ class DrugTable extends React.Component{
                 btnGlyphicon='glyphicon-edit'
                 onClick={ () => this.addStockAction(onClick) }
             />
-                <DeleteButton
-                btnText='Get medicine info'
-                btnContextual='btn-warning'
-                className='my-custom-class'
-                btnGlyphicon='glyphicon-edit'
-                onClick={ () => this.getInfo(onClick) }
-            />
             </>
         );
     }
