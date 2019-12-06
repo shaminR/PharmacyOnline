@@ -23,28 +23,10 @@ const ButtonDiv:any = styled.div`
     align-content: center;
     // background-color: red;
     gap: 10px;
- `
-
-//{ActiveLogin.state.username}
+`
 class ClientPage extends React.Component {
     state = {
         display: 'previousOrders',
-    }
-
-    action = () => {
-        // if(this.state.username === '' || this.state.password === ''){
-        //     alert("Please enter valid credentials");
-        //     return;
-        // } 
-        // if(this.state.type === '' || this.state.type == "Select"){
-        //     alert("please select a user type");
-        //     return;
-        // }
-        // else{
-        //     console.log(this.state.type);
-        //     this.verify();
-        // }
-        //ClientDrugTable.addOrder();
     }
 
     toolBarButtons = (e: any) => {

@@ -3,11 +3,14 @@
     padding: 12 12 11 12;
 }
 
-// .btn-group, .btn-group-vertical {
-// 	position: relative;
-// 	display: -ms-inline-flexbox;
-// 	display: inline-flex;
-// 	vertical-align: middle;
-// 	background-color: black;
-// 	padding: 10px;
-// }
+.my-custom-class{
+    background-color: red;
+}
+
+.btn-group > .btn-group:not(:last-child) > .btn, .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	background-color: green;
+    color: white;
+    border-color: green;
+}
