@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import styled from 'styled-components';
 import "./signup"
 import { withRouter } from "react-router-dom";
+import { resolve } from "url";
 
 const FormDiv = styled.div`
 	display: flex;
@@ -62,20 +63,39 @@ class SignUp extends React.Component {
 		ICName: '',
 		docId: '',
 		usernameValid: false,
+		address: '',
 	}
 	
 	action = async () => {
 		console.log(this.state);
 		if(validInfo(this.state)){
-
+			const name = await this.returnICName();
 			const userExists = await this.checkIfUserExists();
 			console.log(userExists + " hiii ");
 			if(userExists == "taken"){
 				alert("that username is taken");
 				return;
-			} 
+			}
 
-			this.submit();
+			console.log(name);
+			console.log("  "+this.state.ICName);
+
+			if(name == ''&&this.state.ICName!=''){
+				alert("invalid insurance number");
+				alert("If you have no ensurance leave the field empty");
+				return;
+			}
+
+			if(this.state.ICName==''){
+				this.state.ICName = "NULL";
+				this.submit();
+				alert("account created with no ensurance, press ok to go to sign in!");
+			}else{
+								//this.setState({ICName:name})
+				this.state.ICName = name[0].name;
+				this.submit();
+
+			}
 			alert("account created, press ok to go to sign in!");
 			// @ts-ignore
 			this.props.history.push('./login');
@@ -84,6 +104,30 @@ class SignUp extends React.Component {
 			alert("Please enter valid information");
 		}
 	}
+
+	async returnICName(){
+		console.log("getting company name with id "+this.state.ICName);
+		try{
+			let r = await fetch('/api/getIC',{
+				method: 'PUT',
+				headers:{
+					'Content-Type':'application/json'
+				},
+				body:JSON.stringify({ICID:this.state.ICName})
+			});
+			let name = await r.json();
+			console.log("THE NAME IS: "+name);
+			return new Promise((resolve, reject)=>{
+				if(name == ''){
+					resolve('');
+				}
+				resolve(name);
+			});
+		}
+		catch(error){
+		console.log(error);
+	}
+}
 
 	async checkIfUserExists() {
 		console.log("checking if user exists");
@@ -184,12 +228,12 @@ class SignUp extends React.Component {
 					</Form.Row>
 
 					<Form.Row>
-						<Form.Group as ={Col} md = "6">
+						<Form.Group as ={Col} md = "4">
 								<Form.Label>AHN</Form.Label>
 								<Form.Control placeholder = "AHN" id= "AHN" onChange = {this.handleChange}/>
 							</Form.Group>
 
-							<Form.Group as ={Col} md = "6">
+							<Form.Group as ={Col} md = "4">
 								<Form.Label>Insurance number</Form.Label>
 								<Form.Control placeholder = "Insurance number" id= "ICName" onChange = {this.handleChange}/>
 							</Form.Group>
@@ -197,6 +241,9 @@ class SignUp extends React.Component {
 							<Form.Group as ={Col} md = "4">
 								<Form.Label>Doctor Id Number</Form.Label>
 								<Form.Control placeholder = "Doctor id number" id= "docId" onChange = {this.handleChange}/>
+							<Form.Group as ={Col} md = "4">
+								<Form.Label>Home Address</Form.Label>
+								<Form.Control placeholder = "Address" id= "address" onChange = {this.handleChange}/>
 							</Form.Group>
 					</Form.Row>
 

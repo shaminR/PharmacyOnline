@@ -13,7 +13,7 @@ import DisplaySpecific from './DisplaySpecific';
 
 const Main = () => (
     <Switch>
-        <Route exact path = "/" component = {LandingPage} />
+        <Route exact path = "/" component = {Pharmacist} />
         <Route exact path = "/about" component = {About} />
         <Route exact path = "/drugs" component = {DrugDisplay}/>
         <Route exact path = "/alldrugs" component = {Druglist}/>
