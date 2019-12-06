@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
+import {Modal, Button} from 'react-bootstrap';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
@@ -27,7 +28,13 @@ class PharmacistOrderTable extends React.Component{
         selected: {
             orderid: '',
             amount: '',
-            drugid: ''
+            drugid: '',
+            drugName: '',
+        },
+        modalVisibility: false,
+        modalProps: {
+            drugName: '',
+            drugAmount: '',
         }
     }
 
@@ -35,9 +42,10 @@ class PharmacistOrderTable extends React.Component{
         this.state.selected.orderid = row.orderid;
         this.state.selected.amount = row.amount;
         this.state.selected.drugid = row.drugid;
+        this.state.selected.drugName = row.drugname;
     }
     acceptOrder = async (onClick: any) => {
-        console.log("selected is:" + this.state.selected.orderid);
+        console.log("selected is: " + this.state.selected.orderid);
         console.log("amount is: " +  this.state.selected.amount);
         console.log("drugid is: " +  this.state.selected.drugid);
 
@@ -45,17 +53,49 @@ class PharmacistOrderTable extends React.Component{
 
         if(stock < this.state.selected.amount){
             console.log("too much requested, not enough stock!");
+
+            this.state.modalProps.drugName = this.state.selected.drugName;
+            this.state.modalProps.drugAmount = "" + (+this.state.selected.amount - +stock);      //need to buy at least this amount
+
+            this.state.modalVisibility = true;
+            this.forceUpdate();
+
         } else{
             console.log("there is enough!");
-        }
-        // this.changeOrderStatus(+this.state.selected.orderid);
+            
+            this.reduceStockBy(+this.state.selected.drugid, +this.state.selected.amount);
+            this.changeOrderStatus(+this.state.selected.orderid);
 
-        // for (var i = this.state.orders.length - 1; i >= 0; --i) {
-        //     if (this.state.orders[i].orderid == this.state.selected.orderid) {
-        //         this.state.orders.splice(i,1);
-        //     }
-        // }
+            for (var i = this.state.orders.length - 1; i >= 0; --i) {                   // to delete order from table
+                if (this.state.orders[i].orderid == this.state.selected.orderid) {
+                    this.state.orders.splice(i,1);
+                }
+            }
+        }
         this.forceUpdate();
+    }
+
+    async reduceStockBy(drugid: Number, amountToReduce: Number){
+        try {
+            let r = await fetch('/api/reduceDrugStock', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id': drugid, 'amount': amountToReduce})
+            });
+            let result = await r.json();
+
+            if(result == 'success'){
+                console.log("successfully changed stock of drug: " + drugid + " by " + amountToReduce);
+            }else{
+                console.log("error in reducing stock");
+            }
+        
+        } catch (error) {
+            console.log(error);
+            console.log("error in reduce drug stock");
+        }
     }
 
     async componentDidMount() {
@@ -111,7 +151,7 @@ class PharmacistOrderTable extends React.Component{
         }
     }
 
-    createCustomInsertButton = (onClick) => {
+    createCustomInsertButton = (onClick: any) => {
         return (
             <DeleteButton
                 btnText='Accept Order'
@@ -121,6 +161,11 @@ class PharmacistOrderTable extends React.Component{
                 onClick={ () => this.acceptOrder(onClick) }
             />
         );
+    }
+
+    closeModal = () => {
+        this.state.modalVisibility = false;
+        this.forceUpdate();
     }
 
     render(){
@@ -160,6 +205,20 @@ class PharmacistOrderTable extends React.Component{
                     </BootstrapTable >
 
                 </TableDiv>
+
+                <Modal show = {this.state.modalVisibility} onHide = {this.closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Not Enough Stock</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>Need to buy at least {this.state.modalProps.drugAmount} units of {this.state.modalProps.drugName} to fullfill order</Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.closeModal}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
             </div>
 

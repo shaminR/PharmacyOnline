@@ -5,6 +5,8 @@ import {Button, Modal} from 'react-bootstrap';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
+import PharmacistPrescribesTable from './PharmacistPrescribesTable';
+import ActiveLogin from '../ActiveLogin';
 
 const TableDiv = styled.div`
     margin: auto;
@@ -65,6 +67,9 @@ class PharmacistClientTable extends React.Component{
 
     onSelectRow = (row: any, isSelected: boolean, e: any) => {
         this.state.selectedClient = row;
+        console.log(this.state.selectedClient.clientuser + "  selected ");
+        ActiveLogin.state.selectedClient = this.state.selectedClient.clientuser;
+        // PharmacistPrescribesTable.state.clientUsername = this.state.selectedClient.clientuser;
     }
 
     closeModal = () => {
@@ -121,6 +126,9 @@ class PharmacistClientTable extends React.Component{
 
                     <Modal.Body>Insurance Policy Number:  {this.state.selectedClient.ICName} </Modal.Body>
                     <Modal.Body>System username:  {this.state.selectedClient.clientuser} </Modal.Body>
+                    <Modal.Body>
+                        <PharmacistPrescribesTable />
+                    </Modal.Body>
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.closeModal}>

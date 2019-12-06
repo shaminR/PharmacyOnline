@@ -9,3 +9,8 @@ input, optgroup, select, textarea {
 
     background:grey;
 }
+
+#username:focus{
+    border-color: red;
+    box-shadow: 0 0 0 .2rem red;
+}

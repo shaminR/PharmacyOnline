@@ -14,6 +14,16 @@ router.use(bodyParser.json());
 router.get('/api/hello', (req: any, res: any, next: any) => {
     res.json('Rahman');
 });
+router.get('/api/orders', async(req: any, res: any) => {
+    try {
+     //   console.log(" made it here");
+        let orders = await Database.Orders.listAllOrders();
+        res.json(orders);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
 router.get('/api/drugs', async(req: any, res: any) => {
     try {
@@ -37,7 +47,6 @@ router.put('/api/change',async(req: any, res: any) =>{
         res.sendStatus(500);
     }
 })
-
 router.get('/api/driverDrugs',async(req: any, res: any) =>{
     console.log("in routes");
     try{
@@ -49,7 +58,25 @@ router.get('/api/driverDrugs',async(req: any, res: any) =>{
         res.sendStatus(500);
     }
 })
+router.put('/api/getAllClientOrders', async(req: any, res: any) => {
+    try {
+        console.log(req + "\\\\\\\\\\\\\\\\\\ \n");
+        let usernames =  req.body.username;
+     
+        let passwords = req.body.password;
+        let type = '';
+        
+        console.log(usernames + " yuhhhh \n");
 
+        let user = await Database.Orders.findClientOrders({clientUsername: usernames});
+        console.log(" made it here");
+        console.log(JSON.stringify(user));
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     try {
         const statusToFetch: Number = 1;
@@ -85,14 +112,53 @@ router.put('/api/healthrecords', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/reduceDrugStock', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        let reduceBy = +req.body.amount;
+
+        let result = await Database.Drugs.getStock(drugid);
+        let currStock = result[0].stock;
+        let newStock = currStock - reduceBy;
+
+        result = await Database.Drugs.setStock({id: drugid, stock: newStock});
+
+        console.log(JSON.stringify(currStock) + " new: " + newStock);
+        
+        res.json(result);
+        
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/addDrugStock', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        let addAmount = +req.body.amount;
+
+        let result = await Database.Drugs.getStock(drugid);
+        let currStock = result[0].stock;
+        let newStock = currStock + addAmount;
+
+        result = await Database.Drugs.setStock({id: drugid, stock: newStock});
+
+        console.log(JSON.stringify(currStock) + " new: " + newStock);
+        
+        res.json(result);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/getDrugStock', async(req: any, res: any) => {
     try {
 
         let id = req.body.id;
-        console.log(" yuhh " + id);
 
         let result = await Database.Drugs.getStock(id);
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
         res.json(result);
 
     } catch (error) {
@@ -162,6 +228,18 @@ router.put('/api/users', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/userCheckExists', async(req: any, res: any) => {
+    try {
+        let usernames = req.body.username;
+
+        let user = await Database.Users.CheckIfExists({username: usernames});
+        console.log(JSON.stringify(user));
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 
 router.put('/api/signup', async(req,res)=>{
     // console.log("in signup");
@@ -183,17 +261,80 @@ router.put('/api/signup', async(req,res)=>{
     }
 })
 
+router.put('/api/addOrder', async(req,res)=>{
+     console.log("in addORDER");
+    try{
+        console.log(req);
+        const orderid = req.body.orderid;
+        const drugid = req.body.drugid;
+        const amount = req.body.amount;
+        const drugname = req.body.drugname;
+        const status = req.body.status;
+        const drugprice = req.body.drugPrice;
+        const clientUsername = req.body.clientName; 
+        console.log(orderid + drugid);
+        let user = await Database.Orders.addOrder({ orderid: orderid, drugid: drugid,
+            amount: amount,
+            drugname: drugname,
+            status: status,
+            drugprice: drugprice,
+           clientUsername: clientUsername});
+       // let client = await Database.Client.enterToDataBase({birthdates: birthdate,fnames: fname, minits: minit, lnames:lname, AHNS: AHN, ICNames: ICName, usernames: username});
+    }catch(error){
+        console.log(error);
+    }
+})
+
 router.get('/api/healthrecords', async(req: any, res: any) => {
     try {
-        console.log(" made it here -------");
+      //  console.log(" made it here -------");
         let healthrecords = await Database.HealthRecords.listAllRecords();
-        console.log(" made it here ------- mmmm");
+       // console.log(" made it here ------- mmmm");
         res.json(healthrecords);
-        console.log("yuhhhhh kelvin is gay");
+       // console.log("yuhhhhh kelvin is gay");
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
 });
 
+router.get('/api/getOrderId', async(req: any, res: any) => {
+    try {
+      //  console.log(" made it here -------");
+        let orderId = await Database.Orders.getMaxId();
+       // console.log(" made it here ------- mmmm");
+        res.json(orderId);
+       // console.log("yuhhhhh kelvin is gay");
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/getClientdrugIds', async(req: any, res: any) => {
+    try {
+      //  console.log(" made it here -------");
+        const clientUsername = req.body.username;
+        let orderId = await Database.Prescriptions.getClientdrugIds({clientUsername: clientUsername});
+       // console.log(" made it here ------- mmmm");
+        res.json(orderId);
+       // console.log("yuhhhhh kelvin is gay");
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/getPrescribes', async(req: any, res: any) => {
+    try {
+       console.log(" made it here -------");
+        const clientUsername = req.body.username;
+        let orderId = await Database.Prescriptions.getClientdrugIds({clientUsername: clientUsername});
+       // console.log(" made it here ------- mmmm");
+        res.json(orderId);
+       // console.log("yuhhhhh kelvin is gay");
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 export default router;

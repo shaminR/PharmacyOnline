@@ -1,12 +1,11 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import ActiveLogin from '../ActiveLogin';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import { Jumbotron, Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
-
-
 
 const TableDiv = styled.div`
     margin: auto;
@@ -21,7 +20,17 @@ const TableDiv = styled.div`
     padding-left: 10px;
     padding-right: 10px;
 `
-
+const NameTitle = styled.h1`
+    font-size: 36px;
+    font-weight: bold;
+    font-family: Arial, Sans;
+    color: #007bff;
+    float: center;
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 40px;
+`
 const CenterBtn = styled.div`
     text-align:center;
 `
@@ -82,7 +91,7 @@ const CenterBtn = styled.div`
     }
 
     async changeDrugState(){
-        console.log("working"+ this.state.selected);
+        console.log("working "+ this.state.selected);
         try {
             let r = await fetch('/api/change', {
                 method: 'PUT',
@@ -201,19 +210,29 @@ const CenterBtn = styled.div`
         return(
 
             <div style = {{paddingTop: '10px'}}>
+                <NameTitle> Welcome {ActiveLogin.state.username}, </NameTitle>
 
                 <TableDiv>
                     {/* 
                     // @ts-ignore */}
-                    <BootstrapTable data={this.state.drugs} striped hover condensed insertRow deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
+                    <BootstrapTable data={this.state.drugs} striped hover condensed selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
-                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={true} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                             DrugID
                         </TableHeaderColumn>
-
-                        <TableHeaderColumn dataField='drugname' tdStyle={ { whiteSpace: 'normal' } }>
-                            Name
+                        
+                        <TableHeaderColumn dataField='drugname' hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                            Drug
                         </TableHeaderColumn>
+
+                        <TableHeaderColumn dataField='amount' hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                            Amount to Deliver
+                        </TableHeaderColumn>
+
+                        <TableHeaderColumn dataField='clientUsername' tdStyle={ { whiteSpace: 'normal' } }>
+                            Deliver to
+                        </TableHeaderColumn>
+
                         <TableHeaderColumn dataField='address' tdStyle={ { whiteSpace: 'normal' } }>
                             Client Address
                         </TableHeaderColumn>

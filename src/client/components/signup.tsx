@@ -60,12 +60,22 @@ class SignUp extends React.Component {
 		username:'',
 		AHN: '',
 		ICName: '',
+
+		usernameValid: false,
 		address: '',
 	}
 	
-	action = () => {
+	action = async () => {
 		console.log(this.state);
 		if(validInfo(this.state)){
+
+			const userExists = await this.checkIfUserExists();
+			console.log(userExists + " hiii ");
+			if(userExists == "taken"){
+				alert("that username is taken");
+				return;
+			} 
+
 			this.submit();
 			alert("account created, press ok to go to sign in!");
 			// @ts-ignore
@@ -74,6 +84,36 @@ class SignUp extends React.Component {
 			console.log("Invalid information");
 			alert("Please enter valid information");
 		}
+	}
+
+	async checkIfUserExists() {
+		console.log("checking if user exists");
+		try {
+
+            let r = await fetch('/api/userCheckExists',{          //JSON.stringify({username: 'rahman', password: '8002'})
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({username: this.state.username})
+            });
+            let result = await r.json();
+            let length = result.length;
+
+            if(length != 0){
+				result = "taken";
+			} else {
+				result = "notTaken";
+			}
+
+			return new Promise((resolve, reject) => {
+                resolve(result);
+            });
+			
+		} catch (error) {
+			console.log(error);
+			console.log("error in check if user exists");
+        }
 	}
 
 	async submit () {
@@ -92,10 +132,15 @@ class SignUp extends React.Component {
 	}
 	
 	handleChange = (e: any) => {
+
+		if(e.target.id == 'username'){
+			console.log("CHANGING USERNAME");
+			console.log(e.target.value);
+		}
 		this.setState({
 				[e.target.id]: [e.target.value]
 		})
-} 
+	} 
 	
 	render() {
 		return (
@@ -155,9 +200,12 @@ class SignUp extends React.Component {
 
 
 					<Form.Row>
-							<Form.Group as = {Col} md ="4" id ="password">
+							<Form.Group as = {Col} md ="4"  id ="usernameOuter">
 								<Form.Label>Username</Form.Label>
-								<Form.Control  placeholder="Password" id ="username" onChange = {this.handleChange} />
+								<Form.Control  placeholder="Username" id ="username" onChange = {this.handleChange} />
+								<Form.Control.Feedback type="invalid"> Please choose a username. </Form.Control.Feedback>
+
+
 							</Form.Group>
 							<Form.Group as = {Col} md ="4"  id ="password">
 								<Form.Label>Password</Form.Label>
