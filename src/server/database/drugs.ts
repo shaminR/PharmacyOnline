@@ -13,6 +13,23 @@ export const listAllDrugs = async () => {
     });
 }
 
+export const getTypeDrug = async (req: any) => {
+    const type = req.type;
+
+    const query = 'SELECT * FROM drugs WHERE type = ?';
+    const args = [type];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
+
 export const deleteDrug = async (req: any) => {
 
     const id = req.drugid;
@@ -98,5 +115,6 @@ export default {
     deleteDrug,
     addDrug,
     setStock,
-    getStock
+    getStock,
+    getTypeDrug
 }

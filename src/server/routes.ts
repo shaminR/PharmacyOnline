@@ -36,6 +36,19 @@ router.get('/api/drugs', async(req: any, res: any) => {
     }
 });
 
+router.put('/api/getTypedrug', async(req: any, res: any) => {
+    
+    let type = req.body.type;
+
+    try {
+     //   console.log(" made it here");
+        let drugs = await Database.Drugs.getTypeDrug({type: type});
+        res.json(drugs);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/change',async(req: any, res: any) =>{
     let ids = req.body.selected;
     try{
@@ -88,6 +101,7 @@ router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+
 router.get('/api/getAllClients', async(req: any, res: any) => {
     try {
         let orders = await Database.Client.listAllClients();
