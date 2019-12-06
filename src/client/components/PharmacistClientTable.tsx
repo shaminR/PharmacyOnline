@@ -6,6 +6,7 @@ import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
 import PharmacistPrescribesTable from './PharmacistPrescribesTable';
+import PharmacistRecordsTable from './PharmacistRecordsTable';
 import ActiveLogin from '../ActiveLogin';
 
 const TableDiv = styled.div`
@@ -74,6 +75,7 @@ class PharmacistClientTable extends React.Component{
     }
 
     closeModal = () => {
+        console.log("close pressed");
         this.state.modalVisibility = false;
         this.forceUpdate();
     }
@@ -128,14 +130,9 @@ class PharmacistClientTable extends React.Component{
                     <Modal.Body>Insurance Policy Number:  {this.state.selectedClient.ICName} <br></br> System username:  {this.state.selectedClient.clientuser} </Modal.Body>
                     
                     <Modal.Body>
-                        <PharmacistPrescribesTable />
+                        <PharmacistRecordsTable />
                     </Modal.Body>
 
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.closeModal}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
 
 

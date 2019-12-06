@@ -31,8 +31,11 @@ class DrugTable extends React.Component{
         type: '',
         selectedDrug: {
             id: '',
-            name: ''
+            name: '',
+            type: '',
         },
+        boxVal: '',
+        text: "please select a medication type",
         drugs: [],
         modalVisibility: false,
         dropdownModal: false,
@@ -98,7 +101,7 @@ class DrugTable extends React.Component{
             alert("please select a type");
         }
 
-        const temp: any = {drugid: id, drugName: this.state.rowToAdd.name, price: price, type: typeToAdd, expiryYear: year, expiryMonth: month, stock: amount};
+        const temp: any = {drugid: id, drugName: this.state.rowToAdd.name, price: price, type: typeToAdd, expiryYear: year, expiryMonth: month, stock: amount,description: this.state.boxVal};
         this.state.drugs.push(temp);
         this.insertDrug(temp);
         this.forceUpdate();
@@ -123,6 +126,35 @@ class DrugTable extends React.Component{
             console.log("erorr in insertDrug frontend");
             console.log(error);
         }
+
+
+        try {
+            let r = await fetch('/api/drugType', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(details)
+            });
+            let result = await r.json();
+
+            if(result == 'sucess'){
+                console.log("successfully added drug: " + details.drugName);
+            }
+        } catch (error) {
+            console.log("erorr in insertDrug frontend");
+            console.log(error);
+        }
+
+
+
+
+
+
+
+
+
+
     }
 
     async deleteDrug(drugid: number) {
@@ -144,6 +176,95 @@ class DrugTable extends React.Component{
             console.log(error);
             console.log("   << error in deleteDrug >>");
         }
+
+
+        if(this.state.selectedDrug.type=='Chewable'){
+            console.log("CJEWABLE");
+        }
+        else if (this.state.selectedDrug.type == 'Ointment'){
+            try {
+                let r = await fetch('/api/deleteChewable', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(drugid)
+                });
+                let result = await r.json();
+    
+                if(result == 'sucess'){
+                    console.log("success fully deleted drug: " + drugid);
+                }
+    
+            } catch (error) {
+                console.log(error);
+                console.log("   << error in deleteDrug >>");
+            }
+        }
+        else if (this.state.selectedDrug.type == 'Spray'){
+            try {
+                let r = await fetch('/api/deleteSpray', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(drugid)
+                });
+                let result = await r.json();
+    
+                if(result == 'sucess'){
+                    console.log("success fully deleted drug: " + drugid);
+                }
+    
+            } catch (error) {
+                console.log(error);
+                console.log("   << error in deleteDrug >>");
+            }
+        }
+        else if (this.state.selectedDrug.type == 'Syrup'){
+            try {
+                let r = await fetch('/api/deleteSyrup', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(drugid)
+                });
+                let result = await r.json();
+    
+                if(result == 'sucess'){
+                    console.log("success fully deleted drug: " + drugid);
+                }
+    
+            } catch (error) {
+                console.log(error);
+                console.log("   << error in deleteDrug >>");
+            }
+        }
+        else if (this.state.selectedDrug.type == 'Pill'){
+            try {
+                let r = await fetch('/api/deletePill', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(drugid)
+                });
+                let result = await r.json();
+    
+                if(result == 'sucess'){
+                    console.log("success fully deleted drug: " + drugid);
+                }
+    
+            } catch (error) {
+                console.log(error);
+                console.log("   << error in deleteDrug >>");
+            }
+        }
+
+
+
+
     }
 
     async componentDidMount() {
@@ -203,9 +324,18 @@ class DrugTable extends React.Component{
             });
         }
     }
+
+    getInfo = (onclick: any) => {
+        if(!(this.state.selectedDrug.id == '')){
+            this.getInfoQuery();
+        }
+    }
+
+
     onSelectRow = (row: any, isSelected: boolean, e: any) => {
         this.state.selectedDrug.id = row.drugid;
         this.state.selectedDrug.name = row.drugName;
+        this.state.selectedDrug.type = row.type;
     }
     handleAddChange = (e: any) => {
         this.setState({
@@ -270,8 +400,36 @@ class DrugTable extends React.Component{
         }
     }
 
+
+
+
+    async getInfoQuery(){
+        try {
+            let r = await fetch('/api/addDrugStock', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id': this.state.selectedDrug.id, 'amount': this.state.amountToAdd})
+            });
+            let result = await r.json();
+
+            if(result == 'success'){
+                console.log("successfully added stock of drug: " + this.state.selectedDrug.id + " by " + this.state.amountToAdd);
+                this.componentDidMount();
+            }else{
+                console.log("error in reducing stock");
+            }
+        
+        } catch (error) {
+            console.log(error);
+            console.log("error in reduce drug stock");
+        }
+    }
+
     createCustomExportCSVButton = (onClick: any) => {
         return (
+            <>
             <DeleteButton
                 btnText='Add More Stock'
                 btnContextual='btn-warning'
@@ -279,6 +437,14 @@ class DrugTable extends React.Component{
                 btnGlyphicon='glyphicon-edit'
                 onClick={ () => this.addStockAction(onClick) }
             />
+                <DeleteButton
+                btnText='Get medicine info'
+                btnContextual='btn-warning'
+                className='my-custom-class'
+                btnGlyphicon='glyphicon-edit'
+                onClick={ () => this.getInfo(onClick) }
+            />
+            </>
         );
     }
 
@@ -286,7 +452,56 @@ class DrugTable extends React.Component{
         this.setState({
             dropdownType: e.target.value
         })
+        this.text();
     }
+
+    text(){
+        if(this.state.dropdownType=='Chewable'){
+            this.setState({
+              text: "Add chewable flavor... Eg: Orange "
+            });
+        }
+        else if (this.state.dropdownType=='Pill'){
+            this.setState({
+                text: "Add Pill size... Eg: large "
+              });
+        }
+        else if (this.state.dropdownType=='Spray'){
+            this.setState({
+                text: "Add Spray intensity... Eg: High "
+              });
+        }
+        else if (this.state.dropdownType=='Ointement'){
+            this.setState({
+                text: "Add Ointment... Eg: Concentration "
+              });
+        }
+        else if (this.state.dropdownType=='Syrup'){
+            this.setState({
+                text: "Add Syrup flavor... Eg: Strawberry "
+              });
+        }
+
+        else{
+            this.setState({
+                text: "Add chewable flavor... Eg: Orange "
+              });
+        }
+    }
+
+	handleChange = (e: any) => {
+
+		if(e.target.id == 'username'){
+			console.log("CHANGING USERNAME");
+			console.log(e.target.value);
+		}
+		this.setState({
+				[e.target.id]: [e.target.value]
+		})
+	} 
+
+
+
     
     render(){
         const options = {
@@ -380,8 +595,10 @@ class DrugTable extends React.Component{
                                 </Form.Control>
                             </Form.Group>
 
+                            <Form.Control size="sm" type="text" placeholder= {this.state.text} id ="boxVal"  onChange = {this.handleChange}/>
+
                             <ButtonDiv>
-                                <Button variant="primary" onClick = {this.submitDropdownAdd} >Confirm</Button>
+                                <Button variant="primary" onClick = {this.submitDropdownAdd} ></Button>
                             </ButtonDiv>
                         </Form>
 

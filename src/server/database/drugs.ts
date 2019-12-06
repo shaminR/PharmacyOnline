@@ -33,8 +33,8 @@ export const getTypeDrug = async (req: any) => {
 export const deleteDrug = async (req: any) => {
 
     const id = req.drugid;
-
     const query = 'DELETE from drugs WHERE drugid = ?';
+
     const args = [id];
 
     return new Promise((resolve, reject) => {
@@ -48,6 +48,110 @@ export const deleteDrug = async (req: any) => {
         });
     });
 }
+
+
+export const deleteSpray = async (req: any) => {
+
+    const id = req.drugid;
+    const query = 'DELETE from spray WHERE drugid = ?';
+
+    const args = [id];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve("sucess");
+        });
+    });
+}
+
+
+export const deleteChewable = async (req: any) => {
+
+    const id = req.drugid;
+    const query = 'DELETE from chewable WHERE drugid = ?';
+
+    const args = [id];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve("sucess");
+        });
+    });
+}
+
+
+export const deleteSyrup = async (req: any) => {
+
+    const id = req.drugid;
+    const query = 'DELETE from syrup WHERE drugid = ?';
+
+    const args = [id];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve("sucess");
+        });
+    });
+}
+
+
+export const deletePill = async (req: any) => {
+
+    const id = req.drugid;
+    const query = 'DELETE from pill WHERE drugid = ?';
+
+    const args = [id];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve("sucess");
+        });
+    });
+}
+
+
+export const deleteOintment = async (req: any) => {
+
+    const id = req.drugid;
+    const query = 'DELETE from ointment WHERE drugid = ?';
+
+    const args = [id];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve("sucess");
+        });
+    });
+}
+
+
+
+
 export const getStock = async (req: any) => {
 
     const id = req;
@@ -110,11 +214,104 @@ export const setStock = async(req: any)=>{
     });
 }
 
+
+export const addChewable = async(req: any)=>{
+    const id = req.ids;
+    const description = req.descriptions;
+    const query ='INSERT into chewable (id,flavor) values (?, ?)';
+    const args = [id, description];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+
+export const addSpray = async(req: any)=>{
+    const id = req.ids;
+    const description = req.descriptions;
+    const query ='INSERT into spray (id,intensity) values (?, ?)';
+    const args = [id, description];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+export const addOintment = async(req: any)=>{
+    const id = req.ids;
+    const description = req.descriptions;
+    const query ='INSERT into ointment (id,concentration) values (?, ?)';
+    const args = [id, description];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+export const addPill = async(req: any)=>{
+    const id = req.ids;
+    const description = req.descriptions;
+    const query ='INSERT into pill (id,size) values (?, ?)';
+    const args = [id, description];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+export const addSyrup = async(req: any)=>{
+    const id = req.ids;
+    const description = req.descriptions;
+    const query ='INSERT into syrup (id,flavor) values (?, ?)';
+    const args = [id, description];
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                return reject(err);
+            }
+            else{
+                resolve("success");
+            }
+        });
+    });
+}
+
 export default {
     listAllDrugs,
     deleteDrug,
     addDrug,
     setStock,
     getStock,
-    getTypeDrug
+    getTypeDrug,
+    addChewable,
+    addSpray,
+    addOintment,
+    addPill,
+    addSyrup,
+    deleteChewable,
+    deleteOintment,
+    deletePill,
+    deleteSpray,
+    deleteSyrup,
 }

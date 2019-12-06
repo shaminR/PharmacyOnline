@@ -20,6 +20,7 @@ export const listAllRecords = async () => {
 export const find = async (req: any) => {
 
     const username = req.username;
+    console.log("username in healthrecords: " + username);
  
     const query = 'SELECT * from healthrecords WHERE username = ?';
     const args = [username];

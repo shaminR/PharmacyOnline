@@ -59,10 +59,12 @@ class DrugDisplay extends React.Component{
     };
 
 action = () => {
+    // @ts-ignore
     this.props.history.push('./alldrugs');
 }
 showUpdated(){
     DrugButton.state = this.state;
+    // @ts-ignore
     this.props.history.push('./displaymydrug');
 }
 
