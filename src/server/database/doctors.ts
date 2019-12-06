@@ -19,6 +19,20 @@ export const getDocId = async (req: any) => {
     });
 }
 
+export const getAllDocIds = async () => {
+    return new Promise((resolve, reject) => {
+        Connection.query('SELECT docId FROM doctors', (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
+
 export default {
-    getDocId
+    getDocId,
+    getAllDocIds
 }
