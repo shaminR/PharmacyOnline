@@ -32,28 +32,35 @@ const SecondCol = styled.div`
 `
 const Title = styled.h1`
     font-size: 28px;
-    color: #007bff;
+    color: #333333;
     float: center;
     display:flex;
     justify-content: center;
     align-content: center;
+    margin-bottom: -10px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    border-color: #8c8c8c;
+    padding: 10px;
 `
 const NameTitle = styled.h1`
     font-size: 36px;
     font-weight: bold;
     font-family: Arial, Sans;
-    color: #007bff;
+    color: dark-grey;
     float: center;
     display:flex;
     justify-content: center;
     align-content: center;
+    margin-bottom: 20px;
 `
 const GridContainer = styled.div`
-    column-gap: 30px;
-    width: 117%;
-    height: 90%;
-    display: grid;
-    grid-template-columns: 2fr 3fr;
+    // column-gap: 30px;
+    // width: 117%;
+    // height: 90%;
+    // display: grid;
+    // grid-template-columns: 2fr 3fr;
+    margin-top: 50px;
 `
 const MyButtonToolbar = styled.div`
     display: flex;
@@ -61,6 +68,8 @@ const MyButtonToolbar = styled.div`
     align-content: center;
     // background-color: red;
     gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 `
 class Pharmacist extends React.Component{
 
@@ -103,7 +112,7 @@ class Pharmacist extends React.Component{
         return(
             <>
             <GridContainer>
-                <FirstCol>
+                <p>
                     <NameTitle> Welcome {ActiveLogin.state.username}, </NameTitle>
 
                     <MyButtonToolbar>
@@ -112,11 +121,11 @@ class Pharmacist extends React.Component{
                         <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "clients">View Clients</Button>
                     </MyButtonToolbar>
 
-                </FirstCol>
+                </p>
 
-                <SecondCol>
+                <p>
                     {this.sideDisplay()}
-                </SecondCol>
+                </p>
             </GridContainer>
             </>
         )

@@ -21,7 +21,7 @@ export const find = async (req: any) => {
 
     const username = req.username;
  
-    const query = 'SELECT * from healthrecords WHERE AHN = ?';
+    const query = 'SELECT * from healthrecords WHERE username = ?';
     const args = [username];
 
     return new Promise((resolve, reject) => {

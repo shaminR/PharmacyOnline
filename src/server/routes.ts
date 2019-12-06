@@ -65,6 +65,19 @@ router.get('/api/drugs', async(req: any, res: any) => {
     }
 });
 
+router.put('/api/getTypedrug', async(req: any, res: any) => {
+    
+    let type = req.body.type;
+
+    try {
+     //   console.log(" made it here");
+        let drugs = await Database.Drugs.getTypeDrug({type: type});
+        res.json(drugs);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/change',async(req: any, res: any) =>{
     let ids = req.body.selected;
     try{
@@ -117,6 +130,7 @@ router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+
 router.get('/api/getAllClients', async(req: any, res: any) => {
     try {
         let orders = await Database.Client.listAllClients();
@@ -129,9 +143,8 @@ router.get('/api/getAllClients', async(req: any, res: any) => {
 });
 router.put('/api/healthrecords', async(req: any, res: any) => {
     try {
+        console.log(req.body);
         let usernames = req.body.username;
-        let passwords = req.body.password;
-        let type = '';
 
         let user = await Database.HealthRecords.find({username: usernames});
         console.log(JSON.stringify(user));
@@ -155,6 +168,27 @@ router.put('/api/reduceDrugStock', async(req: any, res: any) => {
         console.log(JSON.stringify(currStock) + " new: " + newStock);
         
         res.json(result);
+        
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/drugExist', async(req: any, res: any) => {
+    try {
+        let drugid = req.body.id;
+        console.log(drugid + " in drug exists");
+        
+        let result = await Database.Drugs.getStock(drugid);
+        console.log(result);
+
+        if(typeof result[0] === 'undefined'){
+            console.log("empty");
+            res.json('empty');
+        } else{
+            console.log("exists");
+            res.json('exists');
+        }
         
     } catch (error) {
         console.log(error);
@@ -208,6 +242,20 @@ router.put('/api/deletedrug', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/deletePrescribe', async(req: any, res: any) => {
+    try {
+        let id = req.body.id;
+        console.log(id);
+
+        let deleteResult = await Database.Prescriptions.deletePrescribe(id);
+        console.log("delete prescribe route: " + deleteResult);
+        res.json(deleteResult);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 router.put('/api/pharmacistChangeOrder', async(req: any, res: any) => {
     try {
         let orderid = req.body.id;
@@ -227,6 +275,22 @@ router.put('/api/adddrug', async(req: any, res: any) => {
         console.log(req.body);
 
         let insert = await Database.Drugs.addDrug(req.body);
+        console.log(JSON.stringify(insert) + " <<< we out hereeee");
+        res.json(insert);
+
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.put('/api/addPrescribe', async(req: any, res: any) => {
+    try {
+        console.log(req.body);
+        // const id = req.body.id;
+        // const drugid = req.body.drugid;
+        // const user = req.body.user;
+
+        let insert = await Database.Prescriptions.addPrescription(req.body);
         console.log(JSON.stringify(insert) + " <<< we out hereeee");
         res.json(insert);
 
@@ -314,7 +378,7 @@ router.put('/api/addOrder', async(req,res)=>{
     }
 })
 
-router.get('/api/healthrecords', async(req: any, res: any) => {
+router.get('/api/healthrecordsAll', async(req: any, res: any) => {
     try {
       //  console.log(" made it here -------");
         let healthrecords = await Database.HealthRecords.listAllRecords();
@@ -331,6 +395,18 @@ router.get('/api/getOrderId', async(req: any, res: any) => {
     try {
       //  console.log(" made it here -------");
         let orderId = await Database.Orders.getMaxId();
+       // console.log(" made it here ------- mmmm");
+        res.json(orderId);
+       // console.log("yuhhhhh kelvin is gay");
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+router.get('/api/getmaxid', async(req: any, res: any) => {
+    try {
+      //  console.log(" made it here -------");
+        let orderId = await Database.Prescriptions.getMaxId(); 
        // console.log(" made it here ------- mmmm");
         res.json(orderId);
        // console.log("yuhhhhh kelvin is gay");
@@ -356,9 +432,10 @@ router.put('/api/getClientdrugIds', async(req: any, res: any) => {
 router.put('/api/getPrescribes', async(req: any, res: any) => {
     try {
        console.log(" made it here -------");
-        const clientUsername = req.body.username;
-        let orderId = await Database.Prescriptions.getClientdrugIds({clientUsername: clientUsername});
-       // console.log(" made it here ------- mmmm");
+       const clientUsername = req.body.username;
+       console.log(" yuh " + clientUsername);
+        let orderId = await Database.Prescriptions.getPrescribesTable({clientUsername: clientUsername});
+    //    console.log(order);
         res.json(orderId);
        // console.log("yuhhhhh kelvin is gay");
     } catch (error) {

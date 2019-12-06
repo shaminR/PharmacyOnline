@@ -5,7 +5,6 @@ import ActiveLogin from '../ActiveLogin';
 import './react-bootstrap-table-all.min.css';
 import './table.scss';
 import './dialogBox.css';
-import { CLIENT_RENEG_LIMIT } from 'tls';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 const TableDiv = styled.div`
@@ -81,7 +80,8 @@ class ClientDrugTable extends React.Component{
 				},
 				body: JSON.stringify(this.state.selected)
 			});
-			console.log("order added");
+            console.log("order added");
+            
 		} catch(error){
 			console.log(error);
 		}
@@ -90,6 +90,7 @@ class ClientDrugTable extends React.Component{
      
     closeModal = () => {
         this.state.modalVisibility = false;
+       
         this.forceUpdate();
     }
 
@@ -127,9 +128,11 @@ class ClientDrugTable extends React.Component{
 
         console.log(this.state.selected);
         this.sendOrder();
+        alert('Order Placed');
         this.setState({
             modalVisibility: false
         }); 
+        
         this.setState({
             payVisibility:true
         });

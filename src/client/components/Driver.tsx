@@ -230,7 +230,7 @@ const CenterBtn = styled.div`
                         </TableHeaderColumn>
 
                         <TableHeaderColumn dataField='fname' tdStyle={ { whiteSpace: 'normal' } }>
-                            Client name
+                            Client Name
                         </TableHeaderColumn>
 
                         <TableHeaderColumn dataField='address' tdStyle={ { whiteSpace: 'normal' } }>
