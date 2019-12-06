@@ -40,7 +40,28 @@ export const listAllClients = async () => {
     });
 }
 
+export const getICName = async(req:any) => {
+    const name = req.names;
+
+    console.log(name + " dickkk ");
+
+    const query = 'SELECT * FROM client WHERE clientuser = ?';
+    const args = [name];
+
+    return new Promise((resolve, reject) => {
+        Connection.query(query, args, (err, result) => {
+            if(err){
+                console.log('error in query');
+                return reject(err);
+            }
+            else
+                resolve(result);
+        });
+    });
+}
+
 export default{
     enterToDataBase,
-    listAllClients
+    listAllClients,
+    getICName,
 }

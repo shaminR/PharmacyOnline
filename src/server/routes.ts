@@ -14,6 +14,18 @@ router.use(bodyParser.json());
 router.get('/api/hello', (req: any, res: any, next: any) => {
     res.json('Rahman');
 });
+
+
+router.put('/api/getIC', async(req: any, res: any)=>{
+    console.log("getting insurance name");
+    try{
+        let name = await Database.IC.getName({id:req.body.ICID});
+        res.json(name);
+    }catch(error){
+        console.log(error);
+    }
+})
+
 router.get('/api/orders', async(req: any, res: any) => {
     try {
      //   console.log(" made it here");
@@ -23,6 +35,23 @@ router.get('/api/orders', async(req: any, res: any) => {
         console.log(error);
         res.sendStatus(500);
     }
+});
+
+
+
+router.put('/api/getICName', async(req:any,res:any)=>{
+    try {
+            console.log(req.body[0]);
+            // console.log(req.body.);
+            console.log("/////////////////////////////////////////////////////////////////////////////////////////////");
+           const name = req.body[0];
+
+           let ic = await Database.Client.getICName({names: name});
+           res.json(ic);
+       } catch (error) {
+           console.log(error);
+           res.sendStatus(500);
+       }
 });
 
 router.get('/api/drugs', async(req: any, res: any) => {
