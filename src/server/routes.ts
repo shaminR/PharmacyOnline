@@ -323,4 +323,17 @@ router.put('/api/getClientdrugIds', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+router.put('/api/getPrescribes', async(req: any, res: any) => {
+    try {
+       console.log(" made it here -------");
+        const clientUsername = req.body.username;
+        let orderId = await Database.Prescriptions.getClientdrugIds({clientUsername: clientUsername});
+       // console.log(" made it here ------- mmmm");
+        res.json(orderId);
+       // console.log("yuhhhhh kelvin is gay");
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
 export default router;
