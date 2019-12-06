@@ -73,7 +73,7 @@ class Login extends React.Component{
             });
             let result = await r.json();
             let length = result.length;
-
+           
             if(length == 0){
                 alert("no user found");
                 return;
@@ -99,6 +99,10 @@ class Login extends React.Component{
                 // @ts-ignore
                 this.props.history.push('./driver');
             }
+            else if(ActiveLogin.state.type[0] == 'Doctor'){
+                // @ts-ignore
+                this.props.history.push('./doctor');
+            }
 
         } catch (error) {
             console.log(error);
@@ -121,6 +125,7 @@ class Login extends React.Component{
                                 <option>Pharmacist</option>
                                 <option>Client</option>
                                 <option>Driver</option>
+                                <option>Doctor</option>
                             </Form.Control>
                         </Form.Group>
                     </DropDownDiv>

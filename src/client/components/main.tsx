@@ -10,7 +10,7 @@ import Driver from './Driver';
 import { Router, Switch, Route } from 'react-router-dom';
 import DrugDisplay from './DrugDisplay';
 import DisplaySpecific from './DisplaySpecific';
-
+import Doctor from './Doctor';
 const Main = () => (
     <Switch>
         <Route exact path = "/" component = {Pharmacist} />
@@ -20,6 +20,7 @@ const Main = () => (
         <Route exact path = "/displaymydrug" component = {DisplaySpecific}/>
         <Route exact path = "/login" component = {Login}/>   
         <Route exact path = "/signup" component = {SignUp}/>
+        <Route exact path = "/doctor" component = {Doctor}/>
         <Route exact path = "/userpage" component = {ClientPage}/>
         <Route exact path = "/pharmacist" component = {Pharmacist}/>
         <Route exact path = "/driver" component = {Driver}/>

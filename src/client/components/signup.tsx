@@ -241,6 +241,8 @@ class SignUp extends React.Component {
 							<Form.Group as ={Col} md = "4">
 								<Form.Label>Doctor Id Number</Form.Label>
 								<Form.Control placeholder = "Doctor id number" id= "docId" onChange = {this.handleChange}/>
+							</Form.Group>
+
 							<Form.Group as ={Col} md = "4">
 								<Form.Label>Home Address</Form.Label>
 								<Form.Control placeholder = "Address" id= "address" onChange = {this.handleChange}/>
@@ -253,9 +255,8 @@ class SignUp extends React.Component {
 								<Form.Label>Username</Form.Label>
 								<Form.Control  placeholder="Username" id ="username" onChange = {this.handleChange} />
 								<Form.Control.Feedback type="invalid"> Please choose a username. </Form.Control.Feedback>
-
-
 							</Form.Group>
+
 							<Form.Group as = {Col} md ="4"  id ="password">
 								<Form.Label>Password</Form.Label>
 								<Form.Control type="password" placeholder="Password" id ="password" onChange = {this.handleChange} />

@@ -312,6 +312,9 @@ router.put('/api/users', async(req: any, res: any) => {
         } else if(req.body.type == 'Driver'){
             type = 'driver';
         }
+        else if(req.body.type == 'Doctor'){
+            type = 'doctor';
+        }
         let user = await Database.Users.validate({username: usernames, password: passwords, userType: type});
         console.log(JSON.stringify(user));
         res.json(user);
@@ -325,6 +328,19 @@ router.put('/api/userCheckExists', async(req: any, res: any) => {
         let usernames = req.body.username;
 
         let user = await Database.Users.CheckIfExists({username: usernames});
+        console.log(JSON.stringify(user));
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/api/getDocId', async(req: any, res: any) => {
+    try {
+        let usernames = req.body.username;
+        console.log(usernames);
+        let user = await Database.Doctors.getDocId({username: usernames});
         console.log(JSON.stringify(user));
         res.json(user);
     } catch (error) {
