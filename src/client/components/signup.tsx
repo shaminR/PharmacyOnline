@@ -23,7 +23,8 @@ function validInfo(props: any){
 	const month = +props.month;
 	const day = +props.day;
 	const year = +props.year;
-	
+	const docId = +props.docId;
+	console.log(JSON.stringify(props.allDocId));
 	if(Number.isNaN(ahn) || Number.isNaN(insurance) || Number.isNaN(month) || Number.isNaN(day) || Number.isNaN(year)){
 		console.log("Please enter valid number! for AHN and insurance number, or date");
 		return false;
@@ -45,6 +46,8 @@ function validInfo(props: any){
 		console.log("invalid year")
 		return false;
 	}
+	
+	//console.log("invalid doc id")
 	return true;
 }
 
@@ -64,10 +67,35 @@ class SignUp extends React.Component {
 		docId: '',
 		usernameValid: false,
 		address: '',
+		allDocId: [],
+	}
+	async getMyDocIds(){
+		//console.log("Yuhhhh we in here");
+	
+		try {
+			let r = await fetch('/api/getAllDocIds');
+			let allDocId = await r.json();
+			//console.log(JSON.stringify(allDocId) + "yahwhwhwh ");
+            this.setState({ allDocId });
+		} catch (error) {
+			console.log(error);
+		}
 	}
 	
 	action = async () => {
-		console.log(this.state);
+
+		//  this.getMyDocIds();
+		
+		try {
+			let r = await fetch('/api/getAllDocIds');
+			let allDocId = await r.json();
+			//console.log(JSON.stringify(allDocId) + "yahwhwhwh ");
+            this.setState({ allDocId });
+		} catch (error) {
+			console.log(error);
+		}
+		 console.log(this.state);
+		 
 		if(validInfo(this.state)){
 			const name = await this.returnICName();
 			const userExists = await this.checkIfUserExists();
@@ -85,7 +113,19 @@ class SignUp extends React.Component {
 				alert("If you have no ensurance leave the field empty");
 				return;
 			}
+			var isRight: boolean = false;
+			
+			for(var i = 0; i < this.state.allDocId.length; i++){
 
+				if(this.state.docId == this.state.allDocId[i].docId){
+					console.log(this.state.allDocId[i].docId)
+					isRight = true;
+				}
+			}
+			if(!isRight){
+				alert("Please enter a valid doctor id");
+				return;
+			}
 			if(this.state.ICName==''){
 				this.state.ICName = "NULL";
 				this.submit();

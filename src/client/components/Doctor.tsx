@@ -114,7 +114,7 @@ class Doctor extends React.Component{
             <>
             <GridContainer>
                 {/* <p> */}
-                    <NameTitle> Welcome {ActiveLogin.state.username}, </NameTitle>
+                    <NameTitle> Welcome Dr. {ActiveLogin.state.username}, </NameTitle>
 
                     {/* <MyButtonToolbar>
                         <Button variant="primary" onClick = {(e: any) => {this.toolBarButtons(e)}} id = "allDrugs">View Drugs</Button>

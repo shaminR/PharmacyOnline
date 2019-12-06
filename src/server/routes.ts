@@ -169,6 +169,17 @@ router.get('/api/getAllPharmaOrders', async(req: any, res: any) => {
     }
 });
 
+router.get('/api/getAllDocIds', async(req: any, res: any) => {
+    try {
+        console.log('IN routes of docId');
+        let docIds = await Database.Doctors.getAllDocIds();
+        res.json(docIds);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
 router.get('/api/getAllClients', async(req: any, res: any) => {
     try {
         let orders = await Database.Client.listAllClients();
@@ -460,6 +471,8 @@ router.put('/api/getDocId', async(req: any, res: any) => {
         res.sendStatus(500);
     }
 });
+
+
 
 router.put('/api/signup', async(req,res)=>{
     // console.log("in signup");
