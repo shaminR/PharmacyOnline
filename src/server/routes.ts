@@ -374,7 +374,7 @@ router.put('/api/signup', async(req,res)=>{
 router.put('/api/addOrder', async(req,res)=>{
      console.log("in addORDER");
     try{
-        console.log(req);
+        // console.log(req);
         const orderid = req.body.orderid;
         const drugid = req.body.drugid;
         const amount = req.body.amount;

@@ -18,6 +18,11 @@ const Header:any = styled.h3`
     margin-bottom: 20px;
     border-bottom: 1px solid black;
 `
+const TableDiv1:any = styled.div`
+    height: 200px;
+    overflow-y: scroll;
+    // overflow-x: hide;
+`
 class PharmacistPrescribesTable extends React.Component{
 
     state = {
@@ -57,10 +62,13 @@ class PharmacistPrescribesTable extends React.Component{
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({'username': this.state.clientUsername})
+                body: JSON.stringify({'username': ActiveLogin.state.selectedClient})
             });
             let result = await r.json();
             console.log(result);
+            this.setState({
+                records: result
+            })
             console.log("yuh past records");
 
         } catch (error) {
@@ -260,22 +268,26 @@ class PharmacistPrescribesTable extends React.Component{
         return(
             <>
                 <Header>Prescriptions for {ActiveLogin.state.selectedClient}</Header>
+                <TableDiv1>
                 {/* 
                 // @ts-ignore */}
-                <BootstrapTable data={this.state.prescribes} striped hover condensed exportCSV deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
+                    <BootstrapTable data={this.state.prescribes} striped hover condensed exportCSV deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
-                    <TableHeaderColumn isKey dataField='drugid' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
-                        Drug id
-                    </TableHeaderColumn>
+                        <TableHeaderColumn isKey dataField='drugid' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                            Drug id
+                        </TableHeaderColumn>
 
-                    <TableHeaderColumn dataField='drugName' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
-                        Drug
-                    </TableHeaderColumn>
+                        <TableHeaderColumn dataField='drugName' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                            Drug
+                        </TableHeaderColumn>
 
-                </BootstrapTable>
+                    </BootstrapTable>
+                </TableDiv1>
+
+                <Header>{ActiveLogin.state.selectedClient}'s Health Record</Header>
                 {/* 
                 // @ts-ignore */}
-                <BootstrapTable data={this.state.records} striped hover condensed exportCSV deleteRow selectRow={selectRowProp} options={options} search tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
+                <BootstrapTable data={this.state.records} striped hover condensed tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}>
 
                     <TableHeaderColumn isKey dataField='allergy' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                         Allergy
@@ -283,6 +295,10 @@ class PharmacistPrescribesTable extends React.Component{
 
                     <TableHeaderColumn dataField='condition' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
                         Conditon
+                    </TableHeaderColumn>
+
+                    <TableHeaderColumn dataField='age' dataSort hidden={false} thStyle={ { whiteSpace: 'normal' } } tdStyle={ { whiteSpace: 'normal' } } >
+                        Age
                     </TableHeaderColumn>
 
                 </BootstrapTable>
