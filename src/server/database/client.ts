@@ -44,7 +44,6 @@ export const listAllClients = async () => {
 export const getICName = async(req:any) => {
     const name = req.names;
 
-    console.log(name + " dickkk ");
 
     const query = 'SELECT * FROM client WHERE clientuser = ?';
     const args = [name];
