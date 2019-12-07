@@ -39,7 +39,7 @@ export default {
 
 
 
-#Extra information 
+# Extra information 
 
 ## Server
 The server build process compiles the TypeScript files found in `/src/server` into a single bundled JavaScript file located in the `/dist` directory.
